@@ -451,6 +451,9 @@ PLy_input_datum_func2(PLyDatumToOb *arg, Oid typeOid, HeapTuple typeTup)
 		case NUMERICOID:
 			arg->func = PLyDecimal_FromNumeric;
 			break;
+		case INT1OID:
+			arg->func = PLyInt_FromInt8;
+			break;
 		case INT2OID:
 			arg->func = PLyInt_FromInt16;
 			break;

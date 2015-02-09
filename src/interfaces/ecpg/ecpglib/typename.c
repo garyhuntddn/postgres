@@ -75,6 +75,8 @@ ecpg_dynamic_type(Oid type)
 	{
 		case BOOLOID:
 			return SQL3_BOOLEAN;	/* bool */
+		case INT1OID:
+			return SQL3_TINYINT;		/* int1 */
 		case INT2OID:
 			return SQL3_SMALLINT;		/* int2 */
 		case INT4OID:
@@ -112,6 +114,8 @@ sqlda_dynamic_type(Oid type, enum COMPAT_MODE compat)
 		case BPCHAROID:
 		case TEXTOID:
 			return ECPGt_char;
+		case INT1OID:
+			return ECPGt_unsigned_char;
 		case INT2OID:
 			return ECPGt_short;
 		case INT4OID:

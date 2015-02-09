@@ -307,6 +307,10 @@ DATA(insert OID = 21 (	int2	   PGNSP PGUID	2 t b N f t \054 0	 0 1005 int2in int
 DESCR("-32 thousand to 32 thousand, 2-byte storage");
 #define INT2OID			21
 
+DATA(insert OID = 6021 (	int1	   PGNSP PGUID	1 t b N f t \054 0	 0 1004 int1in int1out int1recv int1send - - - s p f 0 -1 0 0 _null_ _null_ _null_ ));
+DESCR("0 to 255 1-byte storage");
+#define INT1OID			6021
+
 DATA(insert OID = 22 (	int2vector PGNSP PGUID -1 f b A f t \054 0	21 1006 int2vectorin int2vectorout int2vectorrecv int2vectorsend - - - i p f 0 -1 0 0 _null_ _null_ _null_ ));
 DESCR("array of int2, used in system tables");
 #define INT2VECTOROID	22
@@ -445,6 +449,8 @@ DATA(insert OID = 1000 (  _bool		 PGNSP PGUID -1 f b A f t \054 0	16 0 array_in 
 DATA(insert OID = 1001 (  _bytea	 PGNSP PGUID -1 f b A f t \054 0	17 0 array_in array_out array_recv array_send - - array_typanalyze i x f 0 -1 0 0 _null_ _null_ _null_ ));
 DATA(insert OID = 1002 (  _char		 PGNSP PGUID -1 f b A f t \054 0	18 0 array_in array_out array_recv array_send - - array_typanalyze i x f 0 -1 0 0 _null_ _null_ _null_ ));
 DATA(insert OID = 1003 (  _name		 PGNSP PGUID -1 f b A f t \054 0	19 0 array_in array_out array_recv array_send - - array_typanalyze i x f 0 -1 0 0 _null_ _null_ _null_ ));
+DATA(insert OID = 7005 (  _int1		 PGNSP PGUID -1 f b A f t \054 0	6021 0 array_in array_out array_recv array_send - - array_typanalyze i x f 0 -1 0 0 _null_ _null_ _null_ ));
+#define INT1ARRAYOID		7005
 DATA(insert OID = 1005 (  _int2		 PGNSP PGUID -1 f b A f t \054 0	21 0 array_in array_out array_recv array_send - - array_typanalyze i x f 0 -1 0 0 _null_ _null_ _null_ ));
 #define INT2ARRAYOID		1005
 DATA(insert OID = 1006 (  _int2vector PGNSP PGUID -1 f b A f t \054 0	22 0 array_in array_out array_recv array_send - - array_typanalyze i x f 0 -1 0 0 _null_ _null_ _null_ ));

@@ -1050,4 +1050,9 @@ extern int	fdatasync(int fildes);
 /* /port compatibility functions */
 #include "port.h"
 
+#ifdef UCHAR_MIN
+#else
+#define UCHAR_MIN 0
+#endif
+
 #endif   /* C_H */

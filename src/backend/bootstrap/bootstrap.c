@@ -99,6 +99,8 @@ static const struct typinfo TypInfo[] = {
 	F_BYTEAIN, F_BYTEAOUT},
 	{"char", CHAROID, 0, 1, true, 'c', 'p', InvalidOid,
 	F_CHARIN, F_CHAROUT},
+	{"int1", INT1OID, 0, 1, true, 's', 'p', InvalidOid,
+	F_INT1IN, F_INT1OUT},
 	{"int2", INT2OID, 0, 2, true, 's', 'p', InvalidOid,
 	F_INT2IN, F_INT2OUT},
 	{"int4", INT4OID, 0, 4, true, 'i', 'p', InvalidOid,
@@ -467,7 +469,7 @@ BootstrapModeMain(void)
 	 */
 	InitProcess();
 
-	InitPostgres(NULL, InvalidOid, NULL, InvalidOid, NULL);
+	InitPostgres(NULL, InvalidOid, NULL, NULL);
 
 	/* Initialize stuff for bootstrap-file processing */
 	for (i = 0; i < MAXATTR; i++)

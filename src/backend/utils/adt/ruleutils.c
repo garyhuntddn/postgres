@@ -8016,6 +8016,7 @@ get_const_expr(Const *constval, deparse_context *context, int showtype)
 
 	switch (constval->consttype)
 	{
+		case INT1OID:
 		case INT2OID:
 		case INT4OID:
 		case INT8OID:

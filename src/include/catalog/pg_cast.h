@@ -91,9 +91,12 @@ typedef enum CoercionMethod
 
 /*
  * Numeric category: implicit casts are allowed in the direction
- * int2->int4->int8->numeric->float4->float8, while casts in the
+ * int1->int2->int4->int8->numeric->float4->float8, while casts in the
  * reverse direction are assignment-only.
  */
+
+// TODO: INT1 in here
+DATA(insert (	20	 6021  6714 a f )); // TODO: int81 (need new OID for 6714)
 DATA(insert (	20	 21  714 a f ));
 DATA(insert (	20	 23  480 a f ));
 DATA(insert (	20	700  652 i f ));
@@ -104,23 +107,33 @@ DATA(insert (	21	 23  313 i f ));
 DATA(insert (	21	700  236 i f ));
 DATA(insert (	21	701  235 i f ));
 DATA(insert (	21 1700 1782 i f ));
+DATA(insert (	6021	 20  754 i f )); // TODO: int28 (need new OID for 6714)
+DATA(insert (	6021	 21  754 i f )); // TODO: int12 (need new OID for 6714)
+DATA(insert (	6021	 23  313 i f )); // TODO: i2toi4 (need new OID for 6714)
+DATA(insert (	6021	700  236 i f )); // TODO: i2tof (need new OID for 6714)
+DATA(insert (	6021	701  235 i f )); // TODO: i2tod (need new OID for 6714)
+DATA(insert (	6021 1700 1782 i f )); // TODO: int2_numeric (need new OID for 6714)
 DATA(insert (	23	 20  481 i f ));
 DATA(insert (	23	 21  314 a f ));
+DATA(insert (	23	 6021  314 a f )); // TODO
 DATA(insert (	23	700  318 i f ));
 DATA(insert (	23	701  316 i f ));
 DATA(insert (	23 1700 1740 i f ));
 DATA(insert (  700	 20  653 a f ));
 DATA(insert (  700	 21  238 a f ));
+DATA(insert (  700	 6021  238 a f )); // TODO
 DATA(insert (  700	 23  319 a f ));
 DATA(insert (  700	701  311 i f ));
 DATA(insert (  700 1700 1742 a f ));
 DATA(insert (  701	 20  483 a f ));
 DATA(insert (  701	 21  237 a f ));
+DATA(insert (  701	 6021  237 a f )); // TODO
 DATA(insert (  701	 23  317 a f ));
 DATA(insert (  701	700  312 a f ));
 DATA(insert (  701 1700 1743 a f ));
 DATA(insert ( 1700	 20 1779 a f ));
 DATA(insert ( 1700	 21 1783 a f ));
+DATA(insert ( 1700	 6021 1783 a f )); // TODO
 DATA(insert ( 1700	 23 1744 a f ));
 DATA(insert ( 1700	700 1745 i f ));
 DATA(insert ( 1700	701 1746 i f ));
@@ -143,6 +156,8 @@ DATA(insert (	16	23	2558 e f ));
  * casts from text and varchar to regclass, which exist mainly to support
  * legacy forms of nextval() and related functions.
  */
+
+// TODO: INT1 in here
 DATA(insert (	20	 26 1287 i f ));
 DATA(insert (	21	 26  313 i f ));
 DATA(insert (	23	 26    0 i b ));

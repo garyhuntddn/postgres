@@ -3604,6 +3604,7 @@ convert_to_scalar(Datum value, Oid valuetypid, double *scaledvalue,
 			 * Built-in numeric types
 			 */
 		case BOOLOID:
+		case INT1OID:
 		case INT2OID:
 		case INT4OID:
 		case INT8OID:
@@ -3700,6 +3701,8 @@ convert_numeric_to_scalar(Datum value, Oid typid)
 	{
 		case BOOLOID:
 			return (double) DatumGetBool(value);
+		case INT1OID:
+			return (double) DatumGetUInt8(value);
 		case INT2OID:
 			return (double) DatumGetInt16(value);
 		case INT4OID:

@@ -1181,6 +1181,21 @@ dtoi2(PG_FUNCTION_ARGS)
 	PG_RETURN_INT16((int16) rint(num));
 }
 
+/*
+ *		dtoi1			- converts a float8 number to an int1 number
+ */
+Datum
+dtoi1(PG_FUNCTION_ARGS)
+{
+	float8		num = PG_GETARG_FLOAT8(0);
+
+	if (num < UCHAR_MIN || num > UCHAR_MAX || isnan(num))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+
+	PG_RETURN_UINT8((uint8) rint(num));
+}
 
 /*
  *		i4tod			- converts an int4 number to a float8 number
@@ -1201,6 +1216,17 @@ Datum
 i2tod(PG_FUNCTION_ARGS)
 {
 	int16		num = PG_GETARG_INT16(0);
+
+	PG_RETURN_FLOAT8((float8) num);
+}
+
+/*
+ *		i1tod			- converts an int1 number to a float8 number
+ */
+Datum
+i1tod(PG_FUNCTION_ARGS)
+{
+	uint8		num = PG_GETARG_UINT8(0);
 
 	PG_RETURN_FLOAT8((float8) num);
 }
@@ -1239,6 +1265,22 @@ ftoi2(PG_FUNCTION_ARGS)
 	PG_RETURN_INT16((int16) rint(num));
 }
 
+/*
+ *		ftoi1			- converts a float4 number to an int1 number
+ */
+Datum
+ftoi1(PG_FUNCTION_ARGS)
+{
+	float4		num = PG_GETARG_FLOAT4(0);
+
+	if (num < CHAR_MIN || num > CHAR_MAX || isnan(num))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+
+	PG_RETURN_UINT8((uint8) rint(num));
+}
+
 
 /*
  *		i4tof			- converts an int4 number to a float4 number
@@ -1259,6 +1301,17 @@ Datum
 i2tof(PG_FUNCTION_ARGS)
 {
 	int16		num = PG_GETARG_INT16(0);
+
+	PG_RETURN_FLOAT4((float4) num);
+}
+
+/*
+ *		i1tof			- converts an int1 number to a float4 number
+ */
+Datum
+i1tof(PG_FUNCTION_ARGS)
+{
+	uint8		num = PG_GETARG_UINT8(0);
 
 	PG_RETURN_FLOAT4((float4) num);
 }

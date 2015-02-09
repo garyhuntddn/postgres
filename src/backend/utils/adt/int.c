@@ -104,6 +104,55 @@ int2send(PG_FUNCTION_ARGS)
 }
 
 /*
+ *		int1in			- converts "num" to byte
+ */
+Datum
+int1in(PG_FUNCTION_ARGS)
+{
+	char	   *num = PG_GETARG_CSTRING(0);
+
+	PG_RETURN_UINT8(pg_atoi(num, sizeof(int8), '\0'));
+}
+
+/*
+ *		int1out			- converts byte to "num"
+ */
+Datum
+int1out(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	char	   *result = (char *) palloc(4);	/* 3 digits, '\0' */
+
+	pg_itoa(arg1, result);
+	PG_RETURN_CSTRING(result);
+}
+
+/*
+ *		int1recv			- converts external binary format to int1
+ */
+Datum
+int1recv(PG_FUNCTION_ARGS)
+{
+	StringInfo	buf = (StringInfo) PG_GETARG_POINTER(0);
+
+	PG_RETURN_UINT8((uint8) pq_getmsgint(buf, sizeof(int8)));
+}
+
+/*
+ *		int1send			- converts int1 to binary format
+ */
+Datum
+int1send(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	StringInfoData buf;
+
+	pq_begintypsend(&buf);
+	pq_sendint(&buf, arg1, sizeof(int8));
+	PG_RETURN_BYTEA_P(pq_endtypsend(&buf));
+}
+
+/*
  * construct int2vector given a raw array of int2s
  *
  * If int2s is NULL then caller must fill values[] afterward
@@ -339,6 +388,14 @@ i2toi4(PG_FUNCTION_ARGS)
 }
 
 Datum
+i1toi4(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+
+	PG_RETURN_INT32((int32) arg1);
+}
+
+Datum
 i4toi2(PG_FUNCTION_ARGS)
 {
 	int32		arg1 = PG_GETARG_INT32(0);
@@ -349,6 +406,19 @@ i4toi2(PG_FUNCTION_ARGS)
 				 errmsg("smallint out of range")));
 
 	PG_RETURN_INT16((int16) arg1);
+}
+
+Datum
+i4toi1(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+
+	if (arg1 < UCHAR_MIN || arg1 > UCHAR_MAX)
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+
+	PG_RETURN_UINT8((uint8) arg1);
 }
 
 /* Cast int4 -> bool */
@@ -490,6 +560,60 @@ int2ge(PG_FUNCTION_ARGS)
 {
 	int16		arg1 = PG_GETARG_INT16(0);
 	int16		arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_BOOL(arg1 >= arg2);
+}
+
+Datum
+int1eq(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 == arg2);
+}
+
+Datum
+int1ne(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 != arg2);
+}
+
+Datum
+int1lt(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 < arg2);
+}
+
+Datum
+int1le(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 <= arg2);
+}
+
+Datum
+int1gt(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 > arg2);
+}
+
+Datum
+int1ge(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
 
 	PG_RETURN_BOOL(arg1 >= arg2);
 }
@@ -888,6 +1012,132 @@ int2div(PG_FUNCTION_ARGS)
 }
 
 Datum
+int1um(PG_FUNCTION_ARGS)
+{
+	uint8		arg = PG_GETARG_UINT8(0);
+	uint8		result;
+
+	result = -arg;
+	/* overflow check (needed for BYTE_MIN) */
+	if (arg != 0 && SAMESIGN(result, arg))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+	PG_RETURN_UINT8(result);
+}
+
+Datum
+int1up(PG_FUNCTION_ARGS)
+{
+	uint16		arg = PG_GETARG_UINT8(0);
+
+	PG_RETURN_UINT8(arg);
+}
+
+Datum
+int1pl(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+	uint8		result;
+
+	result = arg1 + arg2;
+
+	/*
+	 * Overflow check.  If the inputs are of different signs then their sum
+	 * cannot overflow.  If the inputs are of the same sign, their sum had
+	 * better be that sign too.
+	 */
+	if (SAMESIGN(arg1, arg2) && !SAMESIGN(result, arg1))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+	PG_RETURN_UINT8(result);
+}
+
+Datum
+int1mi(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+	uint8		result;
+
+	result = arg1 - arg2;
+
+	/*
+	 * Overflow check.  If the inputs are of the same sign then their
+	 * difference cannot overflow.  If they are of different signs then the
+	 * result should be of the same sign as the first input.
+	 */
+	if (!SAMESIGN(arg1, arg2) && !SAMESIGN(result, arg1))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+	PG_RETURN_UINT8(result);
+}
+
+Datum
+int1mul(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+	int32		result32;
+
+	/*
+	 * The most practical way to detect overflow is to do the arithmetic in
+	 * int32 (so that the result can't overflow) and then do a range check.
+	 */
+	result32 = (int32) arg1 *(int32) arg2;
+
+	if (result32 < UCHAR_MIN || result32 > UCHAR_MAX)
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+
+	PG_RETURN_UINT8((uint8) result32);
+}
+
+Datum
+int1div(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+	uint8		result;
+
+	if (arg2 == 0)
+	{
+		ereport(ERROR,
+				(errcode(ERRCODE_DIVISION_BY_ZERO),
+				 errmsg("division by zero")));
+		/* ensure compiler realizes we mustn't reach the division (gcc bug) */
+		PG_RETURN_NULL();
+	}
+
+	/*
+	 * BYTE_MIN / -1 is problematic, since the result can't be represented on
+	 * a two's-complement machine.  Some machines produce BYTE_MIN, some
+	 * produce zero, some throw an exception.  We can dodge the problem by
+	 * recognizing that division by -1 is the same as negation.
+	 */
+	if (arg2 == -1)
+	{
+		result = -arg1;
+		/* overflow check (needed for SHRT_MIN) */
+		if (arg1 != 0 && SAMESIGN(result, arg1))
+			ereport(ERROR,
+					(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+					 errmsg("tinyint out of range")));
+		PG_RETURN_UINT8(result);
+	}
+
+	/* No overflow is possible */
+
+	result = arg1 / arg2;
+
+	PG_RETURN_UINT8(result);
+}
+
+Datum
 int24pl(PG_FUNCTION_ARGS)
 {
 	int16		arg1 = PG_GETARG_INT16(0);
@@ -1141,6 +1391,34 @@ int2mod(PG_FUNCTION_ARGS)
 	PG_RETURN_INT16(arg1 % arg2);
 }
 
+Datum
+int1mod(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	if (arg2 == 0)
+	{
+		ereport(ERROR,
+				(errcode(ERRCODE_DIVISION_BY_ZERO),
+				 errmsg("division by zero")));
+		/* ensure compiler realizes we mustn't reach the division (gcc bug) */
+		PG_RETURN_NULL();
+	}
+
+	/*
+	 * Some machines throw a floating-point exception for INT_MIN % -1, which
+	 * is a bit silly since the correct answer is perfectly well-defined,
+	 * namely zero.  (It's not clear this ever happens when dealing with
+	 * int8, but we might as well have the test for safety.)
+	 */
+	if (arg2 == -1)
+		PG_RETURN_UINT8(0);
+
+	/* No overflow is possible */
+
+	PG_RETURN_UINT8(arg1 % arg2);
+}
 
 /* int[24]abs()
  * Absolute value
@@ -1191,6 +1469,39 @@ int2smaller(PG_FUNCTION_ARGS)
 	int16		arg2 = PG_GETARG_INT16(1);
 
 	PG_RETURN_INT16((arg1 < arg2) ? arg1 : arg2);
+}
+
+Datum
+int1abs(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		result;
+
+	result = (arg1 < 0) ? -arg1 : arg1;
+	/* overflow check (needed for SHRT_MIN) */
+	if (result < 0)
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+	PG_RETURN_UINT8(result);
+}
+
+Datum
+int1larger(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_UINT8((arg1 > arg2) ? arg1 : arg2);
+}
+
+Datum
+int1smaller(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_UINT8((arg1 < arg2) ? arg1 : arg2);
 }
 
 Datum
@@ -1327,6 +1638,60 @@ int2shr(PG_FUNCTION_ARGS)
 	int32		arg2 = PG_GETARG_INT32(1);
 
 	PG_RETURN_INT16(arg1 >> arg2);
+}
+
+Datum
+int1and(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_UINT8(arg1 & arg2);
+}
+
+Datum
+int1or(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_UINT8(arg1 | arg2);
+}
+
+Datum
+int1xor(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_UINT8(arg1 ^ arg2);
+}
+
+Datum
+int1not(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+
+	PG_RETURN_UINT8(~arg1);
+}
+
+
+Datum
+int1shl(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_UINT8(arg1 << arg2);
+}
+
+Datum
+int1shr(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_UINT8(arg1 >> arg2);
 }
 
 /*

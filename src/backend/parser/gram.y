@@ -612,7 +612,7 @@ static Node *makeRecursiveViewSelect(char *relname, List *aliases, Node *query);
 	SYMMETRIC SYSID SYSTEM_P
 
 	TABLE TABLES TABLESPACE TEMP TEMPLATE TEMPORARY TEXT_P THEN TIME TIMESTAMP
-	TO TRAILING TRANSACTION TREAT TRIGGER TRIM TRUE_P
+	TINYINT TO TRAILING TRANSACTION TREAT TRIGGER TRIM TRUE_P
 	TRUNCATE TRUSTED TYPE_P TYPES_P
 
 	UNBOUNDED UNCOMMITTED UNENCRYPTED UNION UNIQUE UNKNOWN UNLISTEN UNLOGGED
@@ -10796,6 +10796,11 @@ Numeric:	INT_P
 					$$ = SystemTypeName("int2");
 					$$->location = @1;
 				}
+			| TINYINT
+				{
+					$$ = SystemTypeName("int1");
+					$$->location = @1;
+				}
 			| BIGINT
 				{
 					$$ = SystemTypeName("int8");
@@ -13462,6 +13467,7 @@ col_name_keyword:
 			| SUBSTRING
 			| TIME
 			| TIMESTAMP
+			| TINYINT
 			| TREAT
 			| TRIM
 			| VALUES

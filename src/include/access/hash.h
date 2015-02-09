@@ -267,6 +267,7 @@ extern Datum hashoptions(PG_FUNCTION_ARGS);
  * routine is also used by dynahash tables.
  */
 extern Datum hashchar(PG_FUNCTION_ARGS);
+extern Datum hashint1(PG_FUNCTION_ARGS);
 extern Datum hashint2(PG_FUNCTION_ARGS);
 extern Datum hashint4(PG_FUNCTION_ARGS);
 extern Datum hashint8(PG_FUNCTION_ARGS);

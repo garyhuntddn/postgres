@@ -161,6 +161,10 @@ DATA(insert OID =  38 (  int2in			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21
 DESCR("I/O");
 DATA(insert OID =  39 (  int2out		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 2275 "21" _null_ _null_ _null_ _null_ int2out _null_ _null_ _null_ ));
 DESCR("I/O");
+DATA(insert OID =  6038 (  int1in			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "2275" _null_ _null_ _null_ _null_ int1in _null_ _null_ _null_ ));
+DESCR("I/O");
+DATA(insert OID =  6039 (  int1out		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 2275 "6021" _null_ _null_ _null_ _null_ int1out _null_ _null_ _null_ ));
+DESCR("I/O");
 DATA(insert OID =  40 (  int2vectorin	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 22 "2275" _null_ _null_ _null_ _null_ int2vectorin _null_ _null_ _null_ ));
 DESCR("I/O");
 DATA(insert OID =  41 (  int2vectorout	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 2275 "22" _null_ _null_ _null_ _null_ int2vectorout _null_ _null_ _null_ ));
@@ -204,6 +208,8 @@ DATA(insert OID =  61 (  chareq			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16
 DATA(insert OID =  62 (  nameeq			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "19 19" _null_ _null_ _null_ _null_ nameeq _null_ _null_ _null_ ));
 DATA(insert OID =  63 (  int2eq			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2eq _null_ _null_ _null_ ));
 DATA(insert OID =  64 (  int2lt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2lt _null_ _null_ _null_ ));
+DATA(insert OID =  6063 (  int1eq			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "6021 6021" _null_ _null_ _null_ _null_ int1eq _null_ _null_ _null_ ));
+DATA(insert OID =  6064 (  int1lt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "6021 6021" _null_ _null_ _null_ _null_ int1lt _null_ _null_ _null_ ));
 DATA(insert OID =  65 (  int4eq			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "23 23" _null_ _null_ _null_ _null_ int4eq _null_ _null_ _null_ ));
 DATA(insert OID =  66 (  int4lt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "23 23" _null_ _null_ _null_ _null_ int4lt _null_ _null_ _null_ ));
 DATA(insert OID =  67 (  texteq			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "25 25" _null_ _null_ _null_ _null_ texteq _null_ _null_ _null_ ));
@@ -297,15 +303,22 @@ DATA(insert OID = 141 (  int4mul		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23
 DATA(insert OID = 144 (  int4ne			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "23 23" _null_ _null_ _null_ _null_ int4ne _null_ _null_ _null_ ));
 DATA(insert OID = 145 (  int2ne			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2ne _null_ _null_ _null_ ));
 DATA(insert OID = 146 (  int2gt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2gt _null_ _null_ _null_ ));
+DATA(insert OID = 6145 (  int1ne			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "6021 6021" _null_ _null_ _null_ _null_ int1ne _null_ _null_ _null_ ));
+DATA(insert OID = 6146 (  int1gt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "6021 6021" _null_ _null_ _null_ _null_ int1gt _null_ _null_ _null_ ));
 DATA(insert OID = 147 (  int4gt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "23 23" _null_ _null_ _null_ _null_ int4gt _null_ _null_ _null_ ));
 DATA(insert OID = 148 (  int2le			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2le _null_ _null_ _null_ ));
+DATA(insert OID = 6148 (  int1le			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "6021 6021" _null_ _null_ _null_ _null_ int1le _null_ _null_ _null_ ));
 DATA(insert OID = 149 (  int4le			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "23 23" _null_ _null_ _null_ _null_ int4le _null_ _null_ _null_ ));
 DATA(insert OID = 150 (  int4ge			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "23 23" _null_ _null_ _null_ _null_ int4ge _null_ _null_ _null_ ));
 DATA(insert OID = 151 (  int2ge			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2ge _null_ _null_ _null_ ));
 DATA(insert OID = 152 (  int2mul		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mul _null_ _null_ _null_ ));
 DATA(insert OID = 153 (  int2div		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2div _null_ _null_ _null_ ));
+DATA(insert OID = 6151 (  int1ge		   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "6021 6021" _null_ _null_ _null_ _null_ int1ge _null_ _null_ _null_ ));
+DATA(insert OID = 6152 (  int1mul		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "6021 6021" _null_ _null_ _null_ _null_ int1mul _null_ _null_ _null_ ));
+DATA(insert OID = 6153 (  int1div		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "6021 6021" _null_ _null_ _null_ _null_ int1div _null_ _null_ _null_ ));
 DATA(insert OID = 154 (  int4div		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4div _null_ _null_ _null_ ));
 DATA(insert OID = 155 (  int2mod		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mod _null_ _null_ _null_ ));
+DATA(insert OID = 6155 (  int1mod		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1mod _null_ _null_ _null_ ));
 DATA(insert OID = 156 (  int4mod		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4mod _null_ _null_ _null_ ));
 DATA(insert OID = 157 (  textne			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "25 25" _null_ _null_ _null_ _null_ textne _null_ _null_ _null_ ));
 DATA(insert OID = 158 (  int24eq		   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 23" _null_ _null_ _null_ _null_ int24eq _null_ _null_ _null_ ));
@@ -325,10 +338,12 @@ DATA(insert OID = 171 (  int42mul		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 2
 DATA(insert OID = 172 (  int24div		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "21 23" _null_ _null_ _null_ _null_ int24div _null_ _null_ _null_ ));
 DATA(insert OID = 173 (  int42div		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 21" _null_ _null_ _null_ _null_ int42div _null_ _null_ _null_ ));
 DATA(insert OID = 176 (  int2pl			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2pl _null_ _null_ _null_ ));
+DATA(insert OID = 6176 (  int1pl			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1pl _null_ _null_ _null_ ));
 DATA(insert OID = 177 (  int4pl			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4pl _null_ _null_ _null_ ));
 DATA(insert OID = 178 (  int24pl		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "21 23" _null_ _null_ _null_ _null_ int24pl _null_ _null_ _null_ ));
 DATA(insert OID = 179 (  int42pl		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 21" _null_ _null_ _null_ _null_ int42pl _null_ _null_ _null_ ));
 DATA(insert OID = 180 (  int2mi			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mi _null_ _null_ _null_ ));
+DATA(insert OID = 6180 (  int1mi			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1mi _null_ _null_ _null_ ));
 DATA(insert OID = 181 (  int4mi			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4mi _null_ _null_ _null_ ));
 DATA(insert OID = 182 (  int24mi		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "21 23" _null_ _null_ _null_ _null_ int24mi _null_ _null_ _null_ ));
 DATA(insert OID = 183 (  int42mi		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 21" _null_ _null_ _null_ _null_ int42mi _null_ _null_ _null_ ));
@@ -373,6 +388,7 @@ DESCR("smaller of two");
 
 DATA(insert OID = 212 (  int4um			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "23" _null_ _null_ _null_ _null_ int4um _null_ _null_ _null_ ));
 DATA(insert OID = 213 (  int2um			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2um _null_ _null_ _null_ ));
+DATA(insert OID = 6213 (  int1um			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "6021" _null_ _null_ _null_ _null_ int1um _null_ _null_ _null_ ));
 
 DATA(insert OID = 214 (  float8in		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 701 "2275" _null_ _null_ _null_ _null_	float8in _null_ _null_ _null_ ));
 DESCR("I/O");
@@ -418,10 +434,18 @@ DATA(insert OID = 235 (  float8			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 70
 DESCR("convert int2 to float8");
 DATA(insert OID = 236 (  float4			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 700 "21" _null_ _null_ _null_ _null_	i2tof _null_ _null_ _null_ ));
 DESCR("convert int2 to float4");
+DATA(insert OID = 6235 (  float8			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 701 "6021" _null_ _null_ _null_ _null_	i1tod _null_ _null_ _null_ ));
+DESCR("convert int2 to float8");
+DATA(insert OID = 6236 (  float4			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 700 "6021" _null_ _null_ _null_ _null_	i1tof _null_ _null_ _null_ ));
+DESCR("convert int2 to float4");
 DATA(insert OID = 237 (  int2			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "701" _null_ _null_ _null_ _null_	dtoi2 _null_ _null_ _null_ ));
 DESCR("convert float8 to int2");
 DATA(insert OID = 238 (  int2			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "700" _null_ _null_ _null_ _null_	ftoi2 _null_ _null_ _null_ ));
 DESCR("convert float4 to int2");
+DATA(insert OID = 6237 (  int1			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "701" _null_ _null_ _null_ _null_	dtoi1 _null_ _null_ _null_ ));
+DESCR("convert float8 to int1");
+DATA(insert OID = 6238 (  int1			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "700" _null_ _null_ _null_ _null_	ftoi1 _null_ _null_ _null_ ));
+DESCR("convert float4 to int1");
 DATA(insert OID = 239 (  line_distance	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 701 "628 628" _null_ _null_ _null_ _null_	line_distance _null_ _null_ _null_ ));
 
 DATA(insert OID = 240 (  abstimein		   PGNSP PGUID 12 1 0 0 0 f f f f t f s 1 0 702 "2275" _null_ _null_ _null_ _null_	abstimein _null_ _null_ _null_ ));
@@ -522,8 +546,12 @@ DATA(insert OID = 312 (  float4			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 70
 DESCR("convert float8 to float4");
 DATA(insert OID = 313 (  int4			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23	"21" _null_ _null_ _null_ _null_	i2toi4 _null_ _null_ _null_ ));
 DESCR("convert int2 to int4");
+DATA(insert OID = 6313 (  int4			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23	"6021" _null_ _null_ _null_ _null_	i1toi4 _null_ _null_ _null_ ));
+DESCR("convert int1 to int4");
 DATA(insert OID = 314 (  int2			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21	"23" _null_ _null_ _null_ _null_	i4toi2 _null_ _null_ _null_ ));
-DESCR("convert int4 to int2");
+DESCR("convert int4 to int1");
+DATA(insert OID = 6314 (  int1			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021	"23" _null_ _null_ _null_ _null_	i4toi1 _null_ _null_ _null_ ));
+DESCR("convert int4 to int1");
 DATA(insert OID = 315 (  int2vectoreq	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 16 "22 22" _null_ _null_ _null_ _null_ int2vectoreq _null_ _null_ _null_ ));
 DATA(insert OID = 316 (  float8			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 701  "23" _null_ _null_ _null_ _null_	i4tod _null_ _null_ _null_ ));
 DESCR("convert int4 to float8");
@@ -710,6 +738,8 @@ DESCR("hash(internal)");
 DATA(insert OID = 2786 (  hashoptions	   PGNSP PGUID 12 1 0 0 0 f f f f t f s 2 0 17 "1009 16" _null_ _null_ _null_ _null_  hashoptions _null_ _null_ _null_ ));
 DESCR("hash(internal)");
 
+DATA(insert OID = 6449 (  hashint1		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "6021" _null_ _null_ _null_ _null_ hashint1 _null_ _null_ _null_ ));
+DESCR("hash");
 DATA(insert OID = 449 (  hashint2		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "21" _null_ _null_ _null_ _null_ hashint2 _null_ _null_ _null_ ));
 DESCR("hash");
 DATA(insert OID = 450 (  hashint4		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "23" _null_ _null_ _null_ _null_ hashint4 _null_ _null_ _null_ ));
@@ -954,7 +984,11 @@ DATA(insert OID = 769 (  int4smaller	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0
 DESCR("smaller of two");
 DATA(insert OID = 770 (  int2larger		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2larger _null_ _null_ _null_ ));
 DESCR("larger of two");
+DATA(insert OID = 6770 (  int1larger		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1larger _null_ _null_ _null_ ));
+DESCR("larger of two");
 DATA(insert OID = 771 (  int2smaller	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2smaller _null_ _null_ _null_ ));
+DESCR("smaller of two");
+DATA(insert OID = 6771 (  int1smaller	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1smaller _null_ _null_ _null_ ));
 DESCR("smaller of two");
 
 DATA(insert OID = 774 (  gistgettuple	   PGNSP PGUID 12 1 0 0 0 f f f f t f v 2 0 16 "2281 2281" _null_ _null_ _null_ _null_	gistgettuple _null_ _null_ _null_ ));
@@ -1024,10 +1058,13 @@ DESCR("get the currently executing query");
 
 DATA(insert OID =  862 (  int4_mul_cash		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "23 790" _null_ _null_ _null_ _null_ int4_mul_cash _null_ _null_ _null_ ));
 DATA(insert OID =  863 (  int2_mul_cash		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "21 790" _null_ _null_ _null_ _null_ int2_mul_cash _null_ _null_ _null_ ));
+DATA(insert OID =  6863 (  int1_mul_cash		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "6021 790" _null_ _null_ _null_ _null_ int1_mul_cash _null_ _null_ _null_ ));
 DATA(insert OID =  864 (  cash_mul_int4		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 23" _null_ _null_ _null_ _null_ cash_mul_int4 _null_ _null_ _null_ ));
 DATA(insert OID =  865 (  cash_div_int4		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 23" _null_ _null_ _null_ _null_ cash_div_int4 _null_ _null_ _null_ ));
 DATA(insert OID =  866 (  cash_mul_int2		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 21" _null_ _null_ _null_ _null_ cash_mul_int2 _null_ _null_ _null_ ));
 DATA(insert OID =  867 (  cash_div_int2		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 21" _null_ _null_ _null_ _null_ cash_div_int2 _null_ _null_ _null_ ));
+DATA(insert OID =  6866 (  cash_mul_int1		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 6021" _null_ _null_ _null_ _null_ cash_mul_int1 _null_ _null_ _null_ ));
+DATA(insert OID =  6867 (  cash_div_int1		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 6021" _null_ _null_ _null_ _null_ cash_div_int1 _null_ _null_ _null_ ));
 
 DATA(insert OID =  886 (  cash_in		   PGNSP PGUID 12 1 0 0 0 f f f f t f s 1 0 790 "2275" _null_ _null_ _null_ _null_	cash_in _null_ _null_ _null_ ));
 DESCR("I/O");
@@ -1063,6 +1100,8 @@ DESCR("convert int8 to money");
 /* OIDS 900 - 999 */
 
 DATA(insert OID = 940 (  mod			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mod _null_ _null_ _null_ ));
+DESCR("modulus");
+DATA(insert OID = 6940 (  mod			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1mod _null_ _null_ _null_ ));
 DESCR("modulus");
 DATA(insert OID = 941 (  mod			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4mod _null_ _null_ _null_ ));
 DESCR("modulus");
@@ -1601,6 +1640,8 @@ DESCR("absolute value");
 DATA(insert OID = 1397 (  abs			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "23" _null_ _null_ _null_ _null_ int4abs _null_ _null_ _null_ ));
 DESCR("absolute value");
 DATA(insert OID = 1398 (  abs			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2abs _null_ _null_ _null_ ));
+DESCR("absolute value");
+DATA(insert OID = 7398 (  abs			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "6021" _null_ _null_ _null_ _null_ int1abs _null_ _null_ _null_ ));
 DESCR("absolute value");
 
 /* OIDS 1400 - 1499 */
@@ -2365,6 +2406,10 @@ DATA(insert OID = 1782 ( numeric				PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 170
 DESCR("convert int2 to numeric");
 DATA(insert OID = 1783 ( int2					PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "1700" _null_ _null_ _null_ _null_ numeric_int2 _null_ _null_ _null_ ));
 DESCR("convert numeric to int2");
+DATA(insert OID = 7782 ( numeric				PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 1700 "6021" _null_ _null_ _null_ _null_ int1_numeric _null_ _null_ _null_ ));
+DESCR("convert int1 to numeric");
+DATA(insert OID = 7783 ( int1					PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "1700" _null_ _null_ _null_ _null_ numeric_int1 _null_ _null_ _null_ ));
+DESCR("convert numeric to int1");
 
 /* formatting */
 DATA(insert OID = 1770 ( to_char			PGNSP PGUID 12 1 0 0 0 f f f f t f s 2 0 25 "1184 25" _null_ _null_ _null_ _null_  timestamptz_to_char _null_ _null_ _null_ ));
@@ -2479,6 +2524,8 @@ DATA(insert OID = 3548 (  numeric_accum_inv    PGNSP PGUID 12 1 0 0 0 f f f f f 
 DESCR("aggregate transition function");
 DATA(insert OID = 1834 (  int2_accum	   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 21" _null_ _null_ _null_ _null_ int2_accum _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
+DATA(insert OID = 7834 (  int1_accum	   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 6021" _null_ _null_ _null_ _null_ int1_accum _null_ _null_ _null_ ));
+DESCR("aggregate transition function");
 DATA(insert OID = 1835 (  int4_accum	   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 23" _null_ _null_ _null_ _null_ int4_accum _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
 DATA(insert OID = 1836 (  int8_accum	   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 20" _null_ _null_ _null_ _null_ int8_accum _null_ _null_ _null_ ));
@@ -2486,6 +2533,8 @@ DESCR("aggregate transition function");
 DATA(insert OID = 2746 (  int8_avg_accum	   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 20" _null_ _null_ _null_ _null_ int8_avg_accum _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
 DATA(insert OID = 3567 (  int2_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 21" _null_ _null_ _null_ _null_ int2_accum_inv _null_ _null_ _null_ ));
+DESCR("aggregate transition function");
+DATA(insert OID = 8567 (  int1_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 6021" _null_ _null_ _null_ _null_ int1_accum_inv _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
 DATA(insert OID = 3568 (  int4_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 23" _null_ _null_ _null_ _null_ int4_accum_inv _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
@@ -2505,6 +2554,8 @@ DATA(insert OID = 1839 (  numeric_stddev_samp	PGNSP PGUID 12 1 0 0 0 f f f f f f
 DESCR("aggregate final function");
 DATA(insert OID = 1840 (  int2_sum		   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 20 "20 21" _null_ _null_ _null_ _null_ int2_sum _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
+DATA(insert OID = 7840 (  int1_sum		   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 20 "20 6021" _null_ _null_ _null_ _null_ int1_sum _null_ _null_ _null_ ));
+DESCR("aggregate transition function");
 DATA(insert OID = 1841 (  int4_sum		   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 20 "20 23" _null_ _null_ _null_ _null_ int4_sum _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
 DATA(insert OID = 1842 (  int8_sum		   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 1700 "1700 20" _null_ _null_ _null_ _null_ int8_sum _null_ _null_ _null_ ));
@@ -2517,9 +2568,13 @@ DATA(insert OID = 1844 (  interval_avg	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1
 DESCR("aggregate final function");
 DATA(insert OID = 1962 (  int2_avg_accum   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 21" _null_ _null_ _null_ _null_ int2_avg_accum _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
+DATA(insert OID = 7962 (  int1_avg_accum   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 6021" _null_ _null_ _null_ _null_ int1_avg_accum _null_ _null_ _null_ ));
+DESCR("aggregate transition function");
 DATA(insert OID = 1963 (  int4_avg_accum   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 23" _null_ _null_ _null_ _null_ int4_avg_accum _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
 DATA(insert OID = 3570 (  int2_avg_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 21" _null_ _null_ _null_ _null_ int2_avg_accum_inv _null_ _null_ _null_ ));
+DESCR("aggregate transition function");
+DATA(insert OID = 8570 (  int1_avg_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 6021" _null_ _null_ _null_ _null_ int1_avg_accum_inv _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
 DATA(insert OID = 3571 (  int4_avg_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 23" _null_ _null_ _null_ _null_ int4_avg_accum_inv _null_ _null_ _null_ ));
 DESCR("aggregate transition function");
@@ -2598,6 +2653,13 @@ DATA(insert OID = 1895 (  int2not		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 2
 DATA(insert OID = 1896 (  int2shl		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 23" _null_ _null_ _null_ _null_ int2shl _null_ _null_ _null_ ));
 DATA(insert OID = 1897 (  int2shr		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 23" _null_ _null_ _null_ _null_ int2shr _null_ _null_ _null_ ));
 
+DATA(insert OID = 7892 (  int1and		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1and _null_ _null_ _null_ ));
+DATA(insert OID = 7893 (  int1or		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1or _null_ _null_ _null_ ));
+DATA(insert OID = 7894 (  int1xor		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 6021" _null_ _null_ _null_ _null_ int1xor _null_ _null_ _null_ ));
+DATA(insert OID = 7895 (  int1not		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "6021" _null_ _null_ _null_ _null_ int1not _null_ _null_ _null_ ));
+DATA(insert OID = 7896 (  int1shl		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 23" _null_ _null_ _null_ _null_ int1shl _null_ _null_ _null_ ));
+DATA(insert OID = 7897 (  int1shr		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 6021 "6021 23" _null_ _null_ _null_ _null_ int1shr _null_ _null_ _null_ ));
+
 DATA(insert OID = 1898 (  int4and		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4and _null_ _null_ _null_ ));
 DATA(insert OID = 1899 (  int4or		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4or _null_ _null_ _null_ ));
 DATA(insert OID = 1900 (  int4xor		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "23 23" _null_ _null_ _null_ _null_ int4xor _null_ _null_ _null_ ));
@@ -2614,6 +2676,7 @@ DATA(insert OID = 1909 (  int8shr		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 2
 
 DATA(insert OID = 1910 (  int8up		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 20 "20" _null_ _null_ _null_ _null_ int8up _null_ _null_ _null_ ));
 DATA(insert OID = 1911 (  int2up		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2up _null_ _null_ _null_ ));
+DATA(insert OID = 7911 (  int1up		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "6021" _null_ _null_ _null_ _null_ int1up _null_ _null_ _null_ ));
 DATA(insert OID = 1912 (  int4up		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "23" _null_ _null_ _null_ _null_ int4up _null_ _null_ _null_ ));
 DATA(insert OID = 1913 (  float4up		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 700 "700" _null_ _null_ _null_ _null_ float4up _null_ _null_ _null_ ));
 DATA(insert OID = 1914 (  float8up		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 701 "701" _null_ _null_ _null_ _null_ float8up _null_ _null_ _null_ ));
@@ -3155,6 +3218,8 @@ DATA(insert OID = 2101 (  avg				PGNSP PGUID 12 1 0 0 0 t f f f f f i 1 0 1700 "
 DESCR("the average (arithmetic mean) as numeric of all integer values");
 DATA(insert OID = 2102 (  avg				PGNSP PGUID 12 1 0 0 0 t f f f f f i 1 0 1700 "21" _null_ _null_ _null_ _null_	aggregate_dummy _null_ _null_ _null_ ));
 DESCR("the average (arithmetic mean) as numeric of all smallint values");
+DATA(insert OID = 8102 (  avg				PGNSP PGUID 12 1 0 0 0 t f f f f f i 1 0 1700 "6021" _null_ _null_ _null_ _null_	aggregate_dummy _null_ _null_ _null_ ));
+DESCR("the average (arithmetic mean) as numeric of all tinyint values");
 DATA(insert OID = 2103 (  avg				PGNSP PGUID 12 1 0 0 0 t f f f f f i 1 0 1700 "1700" _null_ _null_ _null_ _null_ aggregate_dummy _null_ _null_ _null_ ));
 DESCR("the average (arithmetic mean) as numeric of all numeric values");
 DATA(insert OID = 2104 (  avg				PGNSP PGUID 12 1 0 0 0 t f f f f f i 1 0 701 "700" _null_ _null_ _null_ _null_	aggregate_dummy _null_ _null_ _null_ ));
@@ -3730,6 +3795,10 @@ DESCR("I/O");
 DATA(insert OID = 2404 (  int2recv			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "2281" _null_ _null_ _null_ _null_	int2recv _null_ _null_ _null_ ));
 DESCR("I/O");
 DATA(insert OID = 2405 (  int2send			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 17 "21" _null_ _null_ _null_ _null_ int2send _null_ _null_ _null_ ));
+DESCR("I/O");
+DATA(insert OID = 8404 (  int1recv			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 6021 "2281" _null_ _null_ _null_ _null_	int1recv _null_ _null_ _null_ ));
+DESCR("I/O");
+DATA(insert OID = 8405 (  int1send			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 17 "6021" _null_ _null_ _null_ _null_ int1send _null_ _null_ _null_ ));
 DESCR("I/O");
 DATA(insert OID = 2406 (  int4recv			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "2281" _null_ _null_ _null_ _null_	int4recv _null_ _null_ _null_ ));
 DESCR("I/O");

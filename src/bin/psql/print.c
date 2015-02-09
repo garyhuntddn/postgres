@@ -2913,6 +2913,7 @@ printQuery(const PGresult *result, const printQueryOpt *opt, FILE *fout, FILE *f
 
 		switch (ftype)
 		{
+			case INT1OID:
 			case INT2OID:
 			case INT4OID:
 			case INT8OID:

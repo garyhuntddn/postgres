@@ -20,6 +20,7 @@
 #define CHAROID			18
 #define NAMEOID			19
 #define INT8OID			20
+#define INT1OID			6021
 #define INT2OID			21
 #define INT2VECTOROID	22
 #define INT4OID			23

@@ -4697,6 +4697,8 @@ text_format(PG_FUNCTION_ARGS)
 				width = DatumGetInt32(value);
 			else if (typid == INT2OID)
 				width = DatumGetInt16(value);
+			else if (typid == INT1OID)
+				width = DatumGetUInt8(value);
 			else
 			{
 				/* For less-usual datatypes, convert to text then to int */

@@ -222,6 +222,11 @@ format_type_internal(Oid type_oid, int32 typemod,
 			buf = pstrdup("double precision");
 			break;
 
+		case INT1OID:
+			buf = pstrdup("tinyint");
+			break;
+
+
 		case INT2OID:
 			buf = pstrdup("smallint");
 			break;

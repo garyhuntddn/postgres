@@ -37,6 +37,12 @@ hashchar(PG_FUNCTION_ARGS)
 }
 
 Datum
+hashint1(PG_FUNCTION_ARGS)
+{
+	return hash_uint32((int32) PG_GETARG_UINT8(0));
+}
+
+Datum
 hashint2(PG_FUNCTION_ARGS)
 {
 	return hash_uint32((int32) PG_GETARG_INT16(0));

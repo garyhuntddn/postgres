@@ -1297,6 +1297,7 @@ json_categorize_type(Oid typoid,
 			*tcategory = JSONTYPE_BOOL;
 			break;
 
+		case INT1OID:
 		case INT2OID:
 		case INT4OID:
 		case INT8OID:

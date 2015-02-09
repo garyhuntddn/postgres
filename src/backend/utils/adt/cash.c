@@ -862,6 +862,54 @@ cash_div_int2(PG_FUNCTION_ARGS)
 	PG_RETURN_CASH(result);
 }
 
+/* cash_mul_int1()
+ * Multiply cash by int1.
+ */
+Datum
+cash_mul_int1(PG_FUNCTION_ARGS)
+{
+	Cash		c = PG_GETARG_CASH(0);
+	uint8		s = PG_GETARG_UINT8(1);
+	Cash		result;
+
+	result = c * s;
+	PG_RETURN_CASH(result);
+}
+
+/* int1_mul_cash()
+ * Multiply int1 by cash.
+ */
+Datum
+int1_mul_cash(PG_FUNCTION_ARGS)
+{
+	uint8		s = PG_GETARG_UINT8(0);
+	Cash		c = PG_GETARG_CASH(1);
+	Cash		result;
+
+	result = s * c;
+	PG_RETURN_CASH(result);
+}
+
+/* cash_div_int1()
+ * Divide cash by int1.
+ *
+ */
+Datum
+cash_div_int1(PG_FUNCTION_ARGS)
+{
+	Cash		c = PG_GETARG_CASH(0);
+	uint8		s = PG_GETARG_UINT8(1);
+	Cash		result;
+
+	if (s == 0)
+		ereport(ERROR,
+				(errcode(ERRCODE_DIVISION_BY_ZERO),
+				 errmsg("division by zero")));
+
+	result = rint(c / s);
+	PG_RETURN_CASH(result);
+}
+
 /* cashlarger()
  * Return larger of two cash values.
  */

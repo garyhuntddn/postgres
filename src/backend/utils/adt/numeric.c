@@ -2507,6 +2507,23 @@ int2_numeric(PG_FUNCTION_ARGS)
 	PG_RETURN_NUMERIC(res);
 }
 
+Datum
+int1_numeric(PG_FUNCTION_ARGS)
+{
+	uint8		val = PG_GETARG_UINT8(0);
+	Numeric		res;
+	NumericVar	result;
+
+	init_var(&result);
+
+	int8_to_numericvar((int64) val, &result);
+
+	res = make_result(&result);
+
+	free_var(&result);
+
+	PG_RETURN_NUMERIC(res);
+}
 
 Datum
 numeric_int2(PG_FUNCTION_ARGS)
@@ -2542,6 +2559,40 @@ numeric_int2(PG_FUNCTION_ARGS)
 	PG_RETURN_INT16(result);
 }
 
+
+Datum
+numeric_int1(PG_FUNCTION_ARGS)
+{
+	Numeric		num = PG_GETARG_NUMERIC(0);
+	NumericVar	x;
+	int64		val;
+	uint8		result;
+
+	/* XXX would it be better to return NULL? */
+	if (NUMERIC_IS_NAN(num))
+		ereport(ERROR,
+				(errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
+				 errmsg("cannot convert NaN to tinyint")));
+
+	/* Convert to variable format and thence to int8 */
+	init_var_from_num(num, &x);
+
+	if (!numericvar_to_int8(&x, &val))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+
+	/* Down-convert to int1 */
+	result = (uint8) val;
+
+	/* Test for overflow by reverse-conversion. */
+	if ((uint8) result != val)
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("tinyint out of range")));
+
+	PG_RETURN_UINT8(result);
+}
 
 Datum
 float8_numeric(PG_FUNCTION_ARGS)
@@ -2952,6 +3003,29 @@ int2_accum(PG_FUNCTION_ARGS)
 }
 
 Datum
+int1_accum(PG_FUNCTION_ARGS)
+{
+	NumericAggState *state;
+
+	state = PG_ARGISNULL(0) ? NULL : (NumericAggState *) PG_GETARG_POINTER(0);
+
+	/* Create the state data on the first call */
+	if (state == NULL)
+		state = makeNumericAggState(fcinfo, true);
+
+	if (!PG_ARGISNULL(1))
+	{
+		Numeric		newval;
+
+		newval = DatumGetNumeric(DirectFunctionCall1(int1_numeric,
+													 PG_GETARG_DATUM(1)));
+		do_numeric_accum(state, newval);
+	}
+
+	PG_RETURN_POINTER(state);
+}
+
+Datum
 int4_accum(PG_FUNCTION_ARGS)
 {
 	NumericAggState *state;
@@ -3044,6 +3118,32 @@ int2_accum_inv(PG_FUNCTION_ARGS)
 		Numeric		newval;
 
 		newval = DatumGetNumeric(DirectFunctionCall1(int2_numeric,
+													 PG_GETARG_DATUM(1)));
+
+		/* Should never fail, all inputs have dscale 0 */
+		if (!do_numeric_discard(state, newval))
+			elog(ERROR, "do_numeric_discard failed unexpectedly");
+	}
+
+	PG_RETURN_POINTER(state);
+}
+
+Datum
+int1_accum_inv(PG_FUNCTION_ARGS)
+{
+	NumericAggState *state;
+
+	state = PG_ARGISNULL(0) ? NULL : (NumericAggState *) PG_GETARG_POINTER(0);
+
+	/* Should not get here with no state */
+	if (state == NULL)
+		elog(ERROR, "int1_accum_inv called with NULL state");
+
+	if (!PG_ARGISNULL(1))
+	{
+		Numeric		newval;
+
+		newval = DatumGetNumeric(DirectFunctionCall1(int1_numeric,
 													 PG_GETARG_DATUM(1)));
 
 		/* Should never fail, all inputs have dscale 0 */
@@ -3378,6 +3478,55 @@ int2_sum(PG_FUNCTION_ARGS)
 }
 
 Datum
+int1_sum(PG_FUNCTION_ARGS)
+{
+	int64		newval;
+
+	if (PG_ARGISNULL(0))
+	{
+		/* No non-null input seen so far... */
+		if (PG_ARGISNULL(1))
+			PG_RETURN_NULL();	/* still no non-null */
+		/* This is the first non-null input. */
+		newval = (int64) PG_GETARG_UINT8(1);
+		PG_RETURN_INT64(newval);
+	}
+
+	/*
+	 * If we're invoked as an aggregate, we can cheat and modify our first
+	 * parameter in-place to avoid palloc overhead. If not, we need to return
+	 * the new value of the transition variable. (If int8 is pass-by-value,
+	 * then of course this is useless as well as incorrect, so just ifdef it
+	 * out.)
+	 */
+#ifndef USE_FLOAT8_BYVAL		/* controls int8 too */
+	if (AggCheckCallContext(fcinfo, NULL))
+	{
+		int64	   *oldsum = (int64 *) PG_GETARG_POINTER(0);
+
+		/* Leave the running sum unchanged in the new input is null */
+		if (!PG_ARGISNULL(1))
+			*oldsum = *oldsum + (int64) PG_GETARG_INT8(1);
+
+		PG_RETURN_POINTER(oldsum);
+	}
+	else
+#endif
+	{
+		int64		oldsum = PG_GETARG_INT64(0);
+
+		/* Leave sum unchanged if new input is null. */
+		if (PG_ARGISNULL(1))
+			PG_RETURN_INT64(oldsum);
+
+		/* OK to do the addition. */
+		newval = oldsum + (int64) PG_GETARG_UINT8(1);
+
+		PG_RETURN_INT64(newval);
+	}
+}
+
+Datum
 int4_sum(PG_FUNCTION_ARGS)
 {
 	int64		newval;
@@ -3509,6 +3658,34 @@ int2_avg_accum(PG_FUNCTION_ARGS)
 }
 
 Datum
+int1_avg_accum(PG_FUNCTION_ARGS)
+{
+	ArrayType  *transarray;
+	uint8		newval = PG_GETARG_UINT8(1);
+	Int8TransTypeData *transdata;
+
+	/*
+	 * If we're invoked as an aggregate, we can cheat and modify our first
+	 * parameter in-place to reduce palloc overhead. Otherwise we need to make
+	 * a copy of it before scribbling on it.
+	 */
+	if (AggCheckCallContext(fcinfo, NULL))
+		transarray = PG_GETARG_ARRAYTYPE_P(0);
+	else
+		transarray = PG_GETARG_ARRAYTYPE_P_COPY(0);
+
+	if (ARR_HASNULL(transarray) ||
+		ARR_SIZE(transarray) != ARR_OVERHEAD_NONULLS(1) + sizeof(Int8TransTypeData))
+		elog(ERROR, "expected 2-element int8 array");
+
+	transdata = (Int8TransTypeData *) ARR_DATA_PTR(transarray);
+	transdata->count++;
+	transdata->sum += newval;
+
+	PG_RETURN_ARRAYTYPE_P(transarray);
+}
+
+Datum
 int4_avg_accum(PG_FUNCTION_ARGS)
 {
 	ArrayType  *transarray;
@@ -3541,6 +3718,34 @@ int2_avg_accum_inv(PG_FUNCTION_ARGS)
 {
 	ArrayType  *transarray;
 	int16		newval = PG_GETARG_INT16(1);
+	Int8TransTypeData *transdata;
+
+	/*
+	 * If we're invoked as an aggregate, we can cheat and modify our first
+	 * parameter in-place to reduce palloc overhead. Otherwise we need to make
+	 * a copy of it before scribbling on it.
+	 */
+	if (AggCheckCallContext(fcinfo, NULL))
+		transarray = PG_GETARG_ARRAYTYPE_P(0);
+	else
+		transarray = PG_GETARG_ARRAYTYPE_P_COPY(0);
+
+	if (ARR_HASNULL(transarray) ||
+		ARR_SIZE(transarray) != ARR_OVERHEAD_NONULLS(1) + sizeof(Int8TransTypeData))
+		elog(ERROR, "expected 2-element int8 array");
+
+	transdata = (Int8TransTypeData *) ARR_DATA_PTR(transarray);
+	transdata->count--;
+	transdata->sum -= newval;
+
+	PG_RETURN_ARRAYTYPE_P(transarray);
+}
+
+Datum
+int1_avg_accum_inv(PG_FUNCTION_ARGS)
+{
+	ArrayType  *transarray;
+	uint8		newval = PG_GETARG_UINT8(1);
 	Int8TransTypeData *transdata;
 
 	/*

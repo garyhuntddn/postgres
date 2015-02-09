@@ -105,6 +105,12 @@ DATA(insert (	1976   21 21 2 s	522 403 0 ));
 DATA(insert (	1976   21 21 3 s	94	403 0 ));
 DATA(insert (	1976   21 21 4 s	524 403 0 ));
 DATA(insert (	1976   21 21 5 s	520 403 0 ));
+/* default operators int1 */
+DATA(insert (	1976   6021 6021 1 s	6095	403 0 )); // 95?
+DATA(insert (	1976   6021 6021 2 s	6522 403 0 )); // 522?
+DATA(insert (	1976   6021 6021 3 s	6094	403 0 )); // 94?
+DATA(insert (	1976   6021 6021 4 s	6524 403 0 )); // 524?
+DATA(insert (	1976   6021 6021 5 s	6520 403 0 )); // 520?
 /* crosstype operators int24 */
 DATA(insert (	1976   21 23 1 s	534 403 0 ));
 DATA(insert (	1976   21 23 2 s	540 403 0 ));
@@ -895,6 +901,33 @@ DATA(insert (   4054     21   23 2 s       540    3580 0 ));
 DATA(insert (   4054     21   23 3 s       532    3580 0 ));
 DATA(insert (   4054     21   23 4 s       542    3580 0 ));
 DATA(insert (   4054     21   23 5 s       536    3580 0 ));
+/*
+DATA(insert (   4054     20   6021 1 s      7870    3580 0 )); // 1807?
+DATA(insert (   4054     20   6021 2 s      7872    3580 0 )); // 1872?
+DATA(insert (   4054     20   6021 3 s      7868    3580 0 )); // TODO: 20 -> 21 and vice versa as well
+DATA(insert (   4054     20   6021 4 s      7873    3580 0 ));
+DATA(insert (   4054     20   6021 5 s      7871    3580 0 ));
+DATA(insert (   4054     6021   6021 1 s        6095    3580 0 ));
+DATA(insert (   4054     6021   6021 2 s       6522    3580 0 ));
+DATA(insert (   4054     6021   6021 3 s       6094    3580 0 ));
+DATA(insert (   4054     6021   6021 4 s       6524    3580 0 ));
+DATA(insert (   4054     6021   6021 5 s       6520    3580 0 ));
+DATA(insert (   4054     6021   20 1 s      7864    3580 0 ));
+DATA(insert (   4054     6021   20 2 s      7866    3580 0 ));
+DATA(insert (   4054     6021   20 3 s      7862    3580 0 ));
+DATA(insert (   4054     6021   20 4 s      7867    3580 0 ));
+DATA(insert (   4054     6021   20 5 s      7865    3580 0 ));
+DATA(insert (   4054     6021   23 1 s       6534    3580 0 ));
+DATA(insert (   4054     6021   23 2 s       6540    3580 0 ));
+DATA(insert (   4054     6021   23 3 s       6532    3580 0 ));
+DATA(insert (   4054     6021   23 4 s       6542    3580 0 ));
+DATA(insert (   4054     6021   23 5 s       6536    3580 0 ));
+DATA(insert (   4054     23   6021 1 s       6535    3580 0 ));
+DATA(insert (   4054     23   6021 2 s       6541    3580 0 ));
+DATA(insert (   4054     23   6021 3 s       6533    3580 0 ));
+DATA(insert (   4054     23   6021 4 s       6543    3580 0 ));
+DATA(insert (   4054     23   6021 5 s       6537    3580 0 ));
+ * */
 DATA(insert (   4054     23   23 1 s        97    3580 0 ));
 DATA(insert (   4054     23   23 2 s       523    3580 0 ));
 DATA(insert (   4054     23   23 3 s        96    3580 0 ));

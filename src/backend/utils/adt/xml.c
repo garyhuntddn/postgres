@@ -3229,6 +3229,9 @@ map_sql_type_to_xml_name(Oid typeoid, int typmod)
 		case INT4OID:
 			appendStringInfoString(&result, "INTEGER");
 			break;
+		case INT1OID:
+			appendStringInfoString(&result, "TINYINT");
+			break;
 		case INT2OID:
 			appendStringInfoString(&result, "SMALLINT");
 			break;
@@ -3417,6 +3420,15 @@ map_sql_type_to_xmlschema_type(Oid typeoid, int typmod)
 								 "    <xsd:minInclusive value=\"%d\"/>\n"
 								 "  </xsd:restriction>\n",
 								 SHRT_MAX, SHRT_MIN);
+				break;
+
+			case INT1OID:
+				appendStringInfo(&result,
+								 "  <xsd:restriction base=\"xsd:byte\">\n"
+								 "    <xsd:maxInclusive value=\"%d\"/>\n"
+								 "    <xsd:minInclusive value=\"%d\"/>\n"
+								 "  </xsd:restriction>\n",
+								 UCHAR_MAX, UCHAR_MIN);
 				break;
 
 			case INT4OID:

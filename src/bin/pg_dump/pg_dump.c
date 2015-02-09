@@ -1675,6 +1675,7 @@ dumpTableData_insert(Archive *fout, DumpOptions *dopt, void *dcontext)
 				/* XXX This code is partially duplicated in ruleutils.c */
 				switch (PQftype(res, field))
 				{
+					case INT1OID:
 					case INT2OID:
 					case INT4OID:
 					case INT8OID:
