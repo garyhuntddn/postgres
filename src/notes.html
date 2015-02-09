@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+	<head>
+		<title>Adding tinyint notes</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<pre>
+// still need to do any int24/int28 etc functions as those are conversion ones
+
+kwlist.h
+	PG_KEYWORD("smallint", SMALLINT, COL_NAME_KEYWORD)
+
+sql3type.sh
+	SQL3_SMALLINT,
+
+preproc.h
+	SMALLINT = 667
+
+bootstrap.c
+	{"int2", INT2OID, 0, 2, true, 's', 'p', InvalidOid,
+	F_INT2IN, F_INT2OUT},
+
+gram.h
+SMALLINT = 590,
+
+gram.c
+	auto-generated
+
+cash.c
+cash_mul_int2(PG_FUNCTION_ARGS)
+int2_mul_cash(PG_FUNCTION_ARGS)
+cash_div_int2(PG_FUNCTION_ARGS)
+
+float.c
+dtoi2(PG_FUNCTION_ARGS) // SHRT_MIN, SHRT_MAX
+i2tod(PG_FUNCTION_ARGS)
+ftoi2(PG_FUNCTION_ARGS)
+i2tof(PG_FUNCTION_ARGS)
+
+format_type.c
+		case INT2OID:
+			buf = pstrdup("smallint");
+
+int.c
+int2in(PG_FUNCTION_ARGS)
+int2out(PG_FUNCTION_ARGS)
+int2recv(PG_FUNCTION_ARGS)
+int2send(PG_FUNCTION_ARGS)
+int2eq(PG_FUNCTION_ARGS)
+int2ne(PG_FUNCTION_ARGS)
+int2lt(PG_FUNCTION_ARGS)
+int2le(PG_FUNCTION_ARGS)
+int2gt(PG_FUNCTION_ARGS)
+int2ge(PG_FUNCTION_ARGS)
+int2um(PG_FUNCTION_ARGS)
+int2up(PG_FUNCTION_ARGS)
+int2pl(PG_FUNCTION_ARGS)
+int2mi(PG_FUNCTION_ARGS)
+int2mul(PG_FUNCTION_ARGS)
+int2div(PG_FUNCTION_ARGS)
+int2mod(PG_FUNCTION_ARGS)
+int2abs(PG_FUNCTION_ARGS)
+int2larger(PG_FUNCTION_ARGS)
+int2smaller(PG_FUNCTION_ARGS)
+int2and(PG_FUNCTION_ARGS)
+int2or(PG_FUNCTION_ARGS)
+int2xor(PG_FUNCTION_ARGS)
+int2not(PG_FUNCTION_ARGS)
+int2shl(PG_FUNCTION_ARGS)
+int2shr(PG_FUNCTION_ARGS)
+
+json.c
+		case INT2OID:
+
+jsonb.c
+		case INT2OID:
+
+numeric.c
+int2_numeric(PG_FUNCTION_ARGS)
+numeric_int2(PG_FUNCTION_ARGS)
+int2_accum(PG_FUNCTION_ARGS)
+int2_accum_inv(PG_FUNCTION_ARGS)
+int2_sum(PG_FUNCTION_ARGS)
+int2_avg_accum(PG_FUNCTION_ARGS)
+int2_avg_accum_inv(PG_FUNCTION_ARGS)
+
+
+ruleutils.c
+		case INT2OID:
+
+selfuncs.c
+		case INT2OID:
+			return (double) DatumGetInt16(value);
+
+varlena.c
+			else if (typid == INT2OID)
+				width = DatumGetInt16(value);
+
+xml.c
+		case INT2OID:
+			appendStringInfoString(&result, "SMALLINT");
+
+catcache.c
+		case INT2OID:
+			*hashfunc = hashint2;
+
+			*eqfunc = F_INT2EQ;
+
+fmgroids.h
+
+#define F_INT2IN 38
+#define F_INT2OUT 39
+#define F_INT2EQ 63
+#define F_INT2LT 64
+#define F_INT2NE 145
+#define F_INT2GT 146
+#define F_INT2LE 148
+#define F_INT2GE 151
+#define F_INT2MUL 152
+#define F_INT2DIV 153
+#define F_INT2MOD 155
+#define F_INT2PL 176
+#define F_INT2MI 180
+#define F_BTINT2CMP 350
+#define F_INT2LARGER 770
+#define F_INT2SMALLER 771
+#define F_INT2_MUL_CASH 863
+#define F_CASH_MUL_INT2 866
+#define F_CASH_DIV_INT2 867
+#define F_INT2ABS 1253
+#define F_INT2_NUMERIC 1782
+#define F_NUMERIC_INT2 1783
+#define F_INT2_ACCUM 1834
+#define F_INT2_SUM 1840
+#define F_INT2AND 1892
+#define F_INT2OR 1893
+#define F_INT2XOR 1894
+#define F_INT2NOT 1895
+#define F_INT2SHL 1896
+#define F_INT2SHR 1897
+#define F_INT2UP 1911
+#define F_INT2_AVG_ACCUM 1962
+#define F_INT2RECV 2404
+#define F_INT2SEND 2405
+#define F_BTINT2SORTSUPPORT 3129
+#define F_INT2_ACCUM_INV 3567
+#define F_INT2_AVG_ACCUM_INV 3570
+#define F_INT2INT4_SUM 3572
+
+fmgr.h
+#define PG_GETARG_INT16(n)	 DatumGetInt16(PG_GETARG_DATUM(n))
+#define PG_GETARG_UINT16(n)  DatumGetUInt16(PG_GETARG_DATUM(n))
+#define PG_RETURN_INT16(x)	 return Int16GetDatum(x)
+#define PG_RETURN_UINT16(x)	 return UInt16GetDatum(x)
+
+fmgrtab.c
+extern Datum int2in (PG_FUNCTION_ARGS);
+extern Datum int2out (PG_FUNCTION_ARGS);
+extern Datum int2eq (PG_FUNCTION_ARGS);
+extern Datum int2lt (PG_FUNCTION_ARGS);
+extern Datum int2ne (PG_FUNCTION_ARGS);
+extern Datum int2gt (PG_FUNCTION_ARGS);
+extern Datum int2le (PG_FUNCTION_ARGS);
+extern Datum int2ge (PG_FUNCTION_ARGS);
+extern Datum int2mul (PG_FUNCTION_ARGS);
+extern Datum int2div (PG_FUNCTION_ARGS);
+extern Datum int2mod (PG_FUNCTION_ARGS);
+extern Datum int2pl (PG_FUNCTION_ARGS);
+extern Datum int4pl (PG_FUNCTION_ARGS);
+extern Datum int2mi (PG_FUNCTION_ARGS);
+extern Datum int2mi (PG_FUNCTION_ARGS);
+extern Datum int2um (PG_FUNCTION_ARGS);
+extern Datum btint2cmp (PG_FUNCTION_ARGS);
+extern Datum int2larger (PG_FUNCTION_ARGS);
+extern Datum int2smaller (PG_FUNCTION_ARGS);
+extern Datum int2_mul_cash (PG_FUNCTION_ARGS);
+extern Datum cash_mul_int2 (PG_FUNCTION_ARGS);
+extern Datum cash_div_int2 (PG_FUNCTION_ARGS);
+extern Datum int2abs (PG_FUNCTION_ARGS);
+extern Datum int2_numeric (PG_FUNCTION_ARGS);
+extern Datum numeric_int2 (PG_FUNCTION_ARGS);
+extern Datum int2_accum (PG_FUNCTION_ARGS);
+extern Datum int2_sum (PG_FUNCTION_ARGS);
+extern Datum int2and (PG_FUNCTION_ARGS);
+extern Datum int2or (PG_FUNCTION_ARGS);
+extern Datum int2xor (PG_FUNCTION_ARGS);
+extern Datum int2not (PG_FUNCTION_ARGS);
+extern Datum int2shl (PG_FUNCTION_ARGS);
+extern Datum int2shr (PG_FUNCTION_ARGS);
+extern Datum int2up (PG_FUNCTION_ARGS);
+extern Datum int2recv (PG_FUNCTION_ARGS);
+extern Datum int2send (PG_FUNCTION_ARGS);
+extern Datum int2vectorrecv (PG_FUNCTION_ARGS);
+extern Datum int2vectorsend (PG_FUNCTION_ARGS);
+extern Datum btint2sortsupport (PG_FUNCTION_ARGS);
+extern Datum int2_accum_inv (PG_FUNCTION_ARGS);
+extern Datum int2_avg_accum_inv (PG_FUNCTION_ARGS);
+extern Datum int2int4_sum (PG_FUNCTION_ARGS);
+
+  { 38, "int2in", 1, true, false, int2in },
+  { 39, "int2out", 1, true, false, int2out },
+  { 63, "int2eq", 2, true, false, int2eq },
+  { 64, "int2lt", 2, true, false, int2lt },
+  { 145, "int2ne", 2, true, false, int2ne },
+  { 146, "int2gt", 2, true, false, int2gt },
+  { 148, "int2le", 2, true, false, int2le },
+  { 149, "int4le", 2, true, false, int4le },
+  { 150, "int4ge", 2, true, false, int4ge },
+  { 151, "int2ge", 2, true, false, int2ge },
+  { 152, "int2mul", 2, true, false, int2mul },
+  { 153, "int2div", 2, true, false, int2div },
+  { 155, "int2mod", 2, true, false, int2mod },
+  { 176, "int2pl", 2, true, false, int2pl },
+  { 180, "int2mi", 2, true, false, int2mi },
+  { 213, "int2um", 1, true, false, int2um },
+  { 350, "btint2cmp", 2, true, false, btint2cmp },
+  { 449, "hashint2", 1, true, false, hashint2 },
+  { 770, "int2larger", 2, true, false, int2larger },
+  { 771, "int2smaller", 2, true, false, int2smaller },
+  { 863, "int2_mul_cash", 2, true, false, int2_mul_cash },
+  { 866, "cash_mul_int2", 2, true, false, cash_mul_int2 },
+  { 866, "cash_mul_int2", 2, true, false, cash_mul_int2 },
+  { 867, "cash_div_int2", 2, true, false, cash_div_int2 },
+  { 940, "int2mod", 2, true, false, int2mod },
+  { 1253, "int2abs", 1, true, false, int2abs },
+  { 1398, "int2abs", 1, true, false, int2abs },              <- here twice!
+  { 1782, "int2_numeric", 1, true, false, int2_numeric },
+  { 1783, "numeric_int2", 1, true, false, numeric_int2 },
+  { 1834, "int2_accum", 2, false, false, int2_accum },
+  { 1840, "int2_sum", 2, false, false, int2_sum },
+  { 1892, "int2and", 2, true, false, int2and },
+  { 1893, "int2or", 2, true, false, int2or },
+  { 1894, "int2xor", 2, true, false, int2xor },
+  { 1895, "int2not", 1, true, false, int2not },
+  { 1896, "int2shl", 2, true, false, int2shl },
+  { 1897, "int2shr", 2, true, false, int2shr },
+  { 1911, "int2up", 1, true, false, int2up },
+  { 1962, "int2_avg_accum", 2, true, false, int2_avg_accum },
+  { 2404, "int2recv", 1, true, false, int2recv },
+  { 2405, "int2send", 1, true, false, int2send },
+  { 3129, "btint2sortsupport", 1, true, false, btint2sortsupport },
+  { 3567, "int2_accum_inv", 2, false, false, int2_accum_inv },
+  { 3570, "int2_avg_accum_inv", 2, true, false, int2_avg_accum_inv },
+  { 3572, "int2int4_sum", 1, true, false, int2int4_sum },
+
+pg_dump.c
+	line 1678
+print.c
+	line 2916
+hash.h
+extern Datum hashint2(PG_FUNCTION_ARGS);
+
+pg_aggregate.h
+DATA(insert ( 2102	n 0 int2_avg_accum	int8_avg		int2_avg_accum	int2_avg_accum_inv	int8_avg	f f 0	1016	0	1016	0	"{0,0}" "{0,0}" ));
+DATA(insert ( 2108	n 0 int4_sum		-				int4_avg_accum	int4_avg_accum_inv int2int4_sum f f 0	20		0	1016	0	_null_ "{0,0}" ));
+DATA(insert ( 2109	n 0 int2_sum		-				int2_avg_accum	int2_avg_accum_inv int2int4_sum f f 0	20		0	1016	0	_null_ "{0,0}" ));
+DATA(insert ( 2117	n 0 int2larger		-				-				-				-				f f 520		21		0	0		0	_null_ _null_ ));
+DATA(insert ( 2133	n 0 int2smaller		-				-				-				-				f f 95		21		0	0		0	_null_ _null_ ));
+DATA(insert ( 2720	n 0 int2_accum	numeric_var_pop		int2_accum		int2_accum_inv	numeric_var_pop f f 0	2281	128 2281	128 _null_ _null_ ));
+DATA(insert ( 2643	n 0 int2_accum	numeric_var_samp	int2_accum		int2_accum_inv	numeric_var_samp f f 0	2281	128 2281	128 _null_ _null_ ));
+DATA(insert ( 2150	n 0 int2_accum	numeric_var_samp	int2_accum		int2_accum_inv	numeric_var_samp f f 0	2281	128 2281	128 _null_ _null_ ));
+DATA(insert ( 2726	n 0 int2_accum	numeric_stddev_pop		int2_accum	int2_accum_inv	numeric_stddev_pop	f f 0	2281	128 2281	128 _null_ _null_ ));
+DATA(insert ( 2714	n 0 int2_accum	numeric_stddev_samp		int2_accum	int2_accum_inv	numeric_stddev_samp f f 0	2281	128 2281	128 _null_ _null_ ));
+DATA(insert ( 2156	n 0 int2_accum	numeric_stddev_samp		int2_accum	int2_accum_inv	numeric_stddev_samp f f 0	2281	128 2281	128 _null_ _null_ ));
+DATA(insert ( 2236	n 0 int2and		-					-				-				-				f f 0	21		0	0		0	_null_ _null_ ));
+DATA(insert ( 2237	n 0 int2or		-					-				-				-				f f 0	21		0	0		0	_null_ _null_ ));
+
+pg_amop.h
+/* default operators int2 */
+DATA(insert (	1976   21 21 1 s	95	403 0 ));
+DATA(insert (	1976   21 21 2 s	522 403 0 ));
+DATA(insert (	1976   21 21 3 s	94	403 0 ));
+DATA(insert (	1976   21 21 4 s	524 403 0 ));
+DATA(insert (	1976   21 21 5 s	520 403 0 ));
+/* minmax integer: int2, int4, int8 */
+
+pg_cast.h
+/*
+ * Numeric category: implicit casts are allowed in the direction
+ * int2->int4->int8->numeric->float4->float8, while casts in the
+ * reverse direction are assignment-only.
+ */
+
+pg_opclass.h
+DATA(insert OID = 1979 ( 403	int2_ops	PGNSP PGUID 1976   21 t 0 ));
+#define INT2_BTREE_OPS_OID 1979
+DATA(insert (	405		int2_ops			PGNSP PGUID 1977   21 t 0 ));
+DATA(insert (	2742	_int2_ops			PGNSP PGUID 2745  1005 t 21 ));
+DATA(insert (	3580	int2_minmax_ops			PGNSP PGUID 4054    21 t 0 ));
+DATA(insert OID =  94 ( "="		   PGNSP PGUID b t t	21	21	16	94 519 int2eq eqsel eqjoinsel ));
+DATA(insert OID =  95 ( "<"		   PGNSP PGUID b f f	21	21	16 520 524 int2lt scalarltsel scalarltjoinsel ));
+DATA(insert OID = 519 (  "<>"	   PGNSP PGUID b f f	21	21	16 519	94 int2ne neqsel neqjoinsel ));
+DATA(insert OID = 520 (  ">"	   PGNSP PGUID b f f	21	21	16	95 522 int2gt scalargtsel scalargtjoinsel ));
+DATA(insert OID = 522 (  "<="	   PGNSP PGUID b f f	21	21	16 524 520 int2le scalarltsel scalarltjoinsel ));
+DATA(insert OID = 524 (  ">="	   PGNSP PGUID b f f	21	21	16 522	95 int2ge scalargtsel scalargtjoinsel ));
+DATA(insert OID = 526 (  "*"	   PGNSP PGUID b f f	21	21	21 526	 0 int2mul - - ));
+DATA(insert OID = 527 (  "/"	   PGNSP PGUID b f f	21	21	21	 0	 0 int2div - - ));
+DATA(insert OID = 529 (  "%"	   PGNSP PGUID b f f	21	21	21	 0	 0 int2mod - - ));
+DATA(insert OID = 550 (  "+"	   PGNSP PGUID b f f	21	21	21 550	 0 int2pl - - ));
+DATA(insert OID = 554 (  "-"	   PGNSP PGUID b f f	21	21	21	 0	 0 int2mi - - ));
+DATA(insert OID = 559 (  "-"	   PGNSP PGUID l f f	 0	21	21	 0	 0 int2um - - ));
+DATA(insert OID = 682 (  "@"	   PGNSP PGUID l f f	 0	21	21	 0	 0 int2abs - - ));
+DATA(insert OID = 914 (  "*"	   PGNSP PGUID b f f	790  21		790 918   0 cash_mul_int2 - - ));
+DATA(insert OID = 915 (  "/"	   PGNSP PGUID b f f	790  21		790   0   0 cash_div_int2 - - ));
+DATA(insert OID = 918 (  "*"	   PGNSP PGUID b f f	21	790		790 914   0 int2_mul_cash - - ));
+DATA(insert OID = 1874 ( "&"	   PGNSP PGUID b f f	21	21	21	1874  0 int2and - - ));
+DATA(insert OID = 1875 ( "|"	   PGNSP PGUID b f f	21	21	21	1875  0 int2or - - ));
+DATA(insert OID = 1876 ( "#"	   PGNSP PGUID b f f	21	21	21	1876  0 int2xor - - ));
+DATA(insert OID = 1877 ( "~"	   PGNSP PGUID l f f	 0	21	21	 0	  0 int2not - - ));
+DATA(insert OID = 1878 ( "<<"	   PGNSP PGUID b f f	21	23	21	 0	  0 int2shl - - ));
+DATA(insert OID = 1879 ( ">>"	   PGNSP PGUID b f f	21	23	21	 0	  0 int2shr - - ));
+DATA(insert OID = 1917 (  "+"	   PGNSP PGUID l f f	 0	21	21	0	0 int2up - - ));
+
+pg_proc.h
+DATA(insert OID =  38 (  int2in			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "2275" _null_ _null_ _null_ _null_ int2in _null_ _null_ _null_ ));
+DATA(insert OID =  39 (  int2out		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 2275 "21" _null_ _null_ _null_ _null_ int2out _null_ _null_ _null_ ));
+DATA(insert OID =  63 (  int2eq			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2eq _null_ _null_ _null_ ));
+DATA(insert OID =  64 (  int2lt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2lt _null_ _null_ _null_ ));
+DATA(insert OID = 145 (  int2ne			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2ne _null_ _null_ _null_ ));
+DATA(insert OID = 146 (  int2gt			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2gt _null_ _null_ _null_ ));
+DATA(insert OID = 148 (  int2le			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2le _null_ _null_ _null_ ));
+DATA(insert OID = 151 (  int2ge			   PGNSP PGUID 12 1 0 0 0 f f f t t f i 2 0 16 "21 21" _null_ _null_ _null_ _null_ int2ge _null_ _null_ _null_ ));
+DATA(insert OID = 152 (  int2mul		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mul _null_ _null_ _null_ ));
+DATA(insert OID = 153 (  int2div		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2div _null_ _null_ _null_ ));
+DATA(insert OID = 155 (  int2mod		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mod _null_ _null_ _null_ ));
+DATA(insert OID = 176 (  int2pl			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2pl _null_ _null_ _null_ ));
+DATA(insert OID = 180 (  int2mi			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mi _null_ _null_ _null_ ));
+DATA(insert OID = 213 (  int2um			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2um _null_ _null_ _null_ ));
+DATA(insert OID = 235 (  float8			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 701 "21" _null_ _null_ _null_ _null_	i2tod _null_ _null_ _null_ ));
+DATA(insert OID = 236 (  float4			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 700 "21" _null_ _null_ _null_ _null_	i2tof _null_ _null_ _null_ ));
+DATA(insert OID = 237 (  int2			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "701" _null_ _null_ _null_ _null_	dtoi2 _null_ _null_ _null_ ));
+DATA(insert OID = 238 (  int2			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "700" _null_ _null_ _null_ _null_	ftoi2 _null_ _null_ _null_ ));
+DATA(insert OID = 313 (  int4			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23	"21" _null_ _null_ _null_ _null_	i2toi4 _null_ _null_ _null_ ));
+DATA(insert OID = 314 (  int2			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21	"23" _null_ _null_ _null_ _null_	i4toi2 _null_ _null_ _null_ ));
+DATA(insert OID = 350 (  btint2cmp		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 23 "21 21" _null_ _null_ _null_ _null_ btint2cmp _null_ _null_ _null_ ));
+DATA(insert OID = 3129 ( btint2sortsupport PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 2278 "2281" _null_ _null_ _null_ _null_ btint2sortsupport _null_ _null_ _null_ ));
+DATA(insert OID = 449 (  hashint2		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 23 "21" _null_ _null_ _null_ _null_ hashint2 _null_ _null_ _null_ ));
+DATA(insert OID = 714 (  int2			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "20" _null_ _null_ _null_ _null_ int82 _null_ _null_ _null_ ));
+DATA(insert OID = 754 (  int8			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 20 "21" _null_ _null_ _null_ _null_ int28 _null_ _null_ _null_ ));
+DATA(insert OID = 770 (  int2larger		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2larger _null_ _null_ _null_ ));
+DATA(insert OID = 771 (  int2smaller	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2smaller _null_ _null_ _null_ ));
+DATA(insert OID =  863 (  int2_mul_cash		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "21 790" _null_ _null_ _null_ _null_ int2_mul_cash _null_ _null_ _null_ ));
+DATA(insert OID =  866 (  cash_mul_int2		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 21" _null_ _null_ _null_ _null_ cash_mul_int2 _null_ _null_ _null_ ));
+DATA(insert OID =  867 (  cash_div_int2		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 790 "790 21" _null_ _null_ _null_ _null_ cash_div_int2 _null_ _null_ _null_ ));
+DATA(insert OID = 940 (  mod			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2mod _null_ _null_ _null_ ));
+DATA(insert OID = 1253 (  int2abs		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2abs _null_ _null_ _null_ ));
+DATA(insert OID = 1398 (  abs			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2abs _null_ _null_ _null_ ));
+DATA(insert OID = 1782 ( numeric				PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 1700 "21" _null_ _null_ _null_ _null_ int2_numeric _null_ _null_ _null_ ));
+DATA(insert OID = 1783 ( int2					PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "1700" _null_ _null_ _null_ _null_ numeric_int2 _null_ _null_ _null_ ));
+DATA(insert OID = 1834 (  int2_accum	   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 21" _null_ _null_ _null_ _null_ int2_accum _null_ _null_ _null_ ));
+DATA(insert OID = 3567 (  int2_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 21" _null_ _null_ _null_ _null_ int2_accum_inv _null_ _null_ _null_ ));
+DATA(insert OID = 1840 (  int2_sum		   PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 20 "20 21" _null_ _null_ _null_ _null_ int2_sum _null_ _null_ _null_ ));
+DATA(insert OID = 1962 (  int2_avg_accum   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 21" _null_ _null_ _null_ _null_ int2_avg_accum _null_ _null_ _null_ ));
+DATA(insert OID = 3570 (  int2_avg_accum_inv   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 1016 "1016 21" _null_ _null_ _null_ _null_ int2_avg_accum_inv _null_ _null_ _null_ ));
+DATA(insert OID = 3572 (  int2int4_sum	   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 20 "1016" _null_ _null_ _null_ _null_ int2int4_sum _null_ _null_ _null_ ));
+DATA(insert OID = 1892 (  int2and		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2and _null_ _null_ _null_ ));
+DATA(insert OID = 1893 (  int2or		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2or _null_ _null_ _null_ ));
+DATA(insert OID = 1894 (  int2xor		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 21" _null_ _null_ _null_ _null_ int2xor _null_ _null_ _null_ ));
+DATA(insert OID = 1895 (  int2not		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2not _null_ _null_ _null_ ));
+DATA(insert OID = 1896 (  int2shl		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 23" _null_ _null_ _null_ _null_ int2shl _null_ _null_ _null_ ));
+DATA(insert OID = 1897 (  int2shr		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 2 0 21 "21 23" _null_ _null_ _null_ _null_ int2shr _null_ _null_ _null_ ));
+DATA(insert OID = 1911 (  int2up		   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "21" _null_ _null_ _null_ _null_ int2up _null_ _null_ _null_ ));
+DATA(insert OID = 2404 (  int2recv			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 21 "2281" _null_ _null_ _null_ _null_	int2recv _null_ _null_ _null_ ));
+DATA(insert OID = 2405 (  int2send			   PGNSP PGUID 12 1 0 0 0 f f f f t f i 1 0 17 "21" _null_ _null_ _null_ _null_ int2send _null_ _null_ _null_ ));
+
+pg_type.h
+DATA(insert OID = 21 (	int2	   PGNSP PGUID	2 t b N f t \054 0	 0 1005 int2in int2out int2recv int2send - - - s p f 0 -1 0 0 _null_ _null_ _null_ ));
+#define INT2OID			21
+DATA(insert OID = 1005 (  _int2		 PGNSP PGUID -1 f b A f t \054 0	21 0 array_in array_out array_recv array_send - - array_typanalyze i x f 0 -1 0 0 _null_ _null_ _null_ ));
+#define INT2ARRAYOID		1005
+
+builtins.h
+extern Datum int2in(PG_FUNCTION_ARGS);
+extern Datum int2out(PG_FUNCTION_ARGS);
+extern Datum int2recv(PG_FUNCTION_ARGS);
+extern Datum int2send(PG_FUNCTION_ARGS);
+extern Datum int2vectorin(PG_FUNCTION_ARGS);
+extern Datum int2vectorout(PG_FUNCTION_ARGS);
+extern Datum int2vectorrecv(PG_FUNCTION_ARGS);
+extern Datum int2vectorsend(PG_FUNCTION_ARGS);
+extern Datum int2vectoreq(PG_FUNCTION_ARGS);
+extern Datum i2toi4(PG_FUNCTION_ARGS);
+extern Datum i4toi2(PG_FUNCTION_ARGS);
+extern Datum int2eq(PG_FUNCTION_ARGS);
+extern Datum int2ne(PG_FUNCTION_ARGS);
+extern Datum int2lt(PG_FUNCTION_ARGS);
+extern Datum int2le(PG_FUNCTION_ARGS);
+extern Datum int2gt(PG_FUNCTION_ARGS);
+extern Datum int2ge(PG_FUNCTION_ARGS);
+extern Datum int2um(PG_FUNCTION_ARGS);
+extern Datum int2up(PG_FUNCTION_ARGS);
+extern Datum int2pl(PG_FUNCTION_ARGS);
+extern Datum int2mi(PG_FUNCTION_ARGS);
+extern Datum int2mul(PG_FUNCTION_ARGS);
+extern Datum int2div(PG_FUNCTION_ARGS);
+extern Datum int2abs(PG_FUNCTION_ARGS);
+extern Datum int2mod(PG_FUNCTION_ARGS);
+extern Datum int2larger(PG_FUNCTION_ARGS);
+extern Datum int2smaller(PG_FUNCTION_ARGS);
+extern Datum int2and(PG_FUNCTION_ARGS);
+extern Datum int2or(PG_FUNCTION_ARGS);
+extern Datum int2xor(PG_FUNCTION_ARGS);
+extern Datum int2not(PG_FUNCTION_ARGS);
+extern Datum int2shl(PG_FUNCTION_ARGS);
+extern Datum int2shr(PG_FUNCTION_ARGS);
+extern Datum btint2cmp(PG_FUNCTION_ARGS);
+extern Datum btint2sortsupport(PG_FUNCTION_ARGS);
+extern Datum int2_numeric(PG_FUNCTION_ARGS);
+extern Datum numeric_int2(PG_FUNCTION_ARGS);
+extern Datum int2_accum(PG_FUNCTION_ARGS);
+extern Datum int2_accum_inv(PG_FUNCTION_ARGS);
+extern Datum int2_sum(PG_FUNCTION_ARGS);
+extern Datum int2_avg_accum(PG_FUNCTION_ARGS);
+extern Datum int2_avg_accum_inv(PG_FUNCTION_ARGS);
+extern Datum int2int4_sum(PG_FUNCTION_ARGS);
+
+cash.h
+extern Datum cash_mul_int2(PG_FUNCTION_ARGS);
+extern Datum int2_mul_cash(PG_FUNCTION_ARGS);
+extern Datum cash_div_int2(PG_FUNCTION_ARGS);
+
+ph_type.h
+#define INT2OID			21
+#define INT2VECTOROID	22
+
+typename.c
+		case INT2OID:
+			return SQL3_SMALLINT;		/* int2 */
+		case INT2OID:
+			return ECPGt_short;
+
+plpy_typeio.c
+		case INT2OID:
+			arg->func = PLyInt_FromInt16;
+		</pre>
+	</body>
+</html>

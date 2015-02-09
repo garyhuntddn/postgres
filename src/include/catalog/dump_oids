@@ -1,0 +1,55 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+BEGIN
+{
+	@ARGV = (glob("pg_*.h"), qw(indexing.h toasting.h));
+}
+
+my %oids;
+my $line;
+
+while (<>)
+{
+	next if /^CATALOG\(.*BKI_BOOTSTRAP/;
+	next
+	  unless /^DATA\(insert *OID *= *(\d+) *(.+)/;
+#		  || /^CATALOG\([^,]*, *(\d+).*BKI_ROWTYPE_OID\((\d+)\)/
+#		  || /^CATALOG\([^,]*, *(\d+)/
+#		  || /^DECLARE_INDEX\([^,]*, *(\d+)/
+#		  || /^DECLARE_UNIQUE_INDEX\([^,]*, *(\d+)/
+#		  || /^DECLARE_TOAST\([^,]*, *(\d+), *(\d+)/;
+	my $oid = $1;
+	my $value = $2;
+	$value =~ s/\t/ /g;
+	$value =~ s/\_null\_/ /g;
+	$value =~ s/ b / /g;
+	$value =~ s/ f / /g;
+	$value =~ s/ i / /g;
+	$value =~ s/ N / /g;
+	$value =~ s/ S / /g;
+	$value =~ s/ t / /g;
+	$value =~ s/ U / /g;
+	$value =~ s/ 0 / /g;
+	$value =~ s/ 1 / /g;
+	$value =~ s/ \-1 / /g;
+	$value =~ s/ \- / /g;
+	$value =~ s/ PGNSP / /g;
+	$value =~ s/ PGUID / /g;
+	$oids{$oid} = $value;
+#NAMEDATALEN
+#
+	$oids{$oid} =~ s/ \)\)\;/ /g;
+	$oids{$oid} =~ s/\( / /g;
+	$oids{$oid} =~ s/\"/ /g;
+	$oids{$oid} =~ s/  / /g;
+}
+
+foreach my $oid (sort { $a <=> $b } keys %oids)
+{
+	print "$oid\t$oids{$oid}\n";
+}
+
+exit 0;
