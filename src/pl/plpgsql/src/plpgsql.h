@@ -226,6 +226,7 @@ typedef struct PLpgSQL_expr
 	Expr	   *expr_simple_expr;		/* NULL means not a simple expr */
 	int			expr_simple_generation; /* plancache generation we checked */
 	Oid			expr_simple_type;		/* result type Oid, if simple */
+	int32		expr_simple_typmod;		/* result typmod, if simple */
 
 	/*
 	 * if expr is simple AND prepared in current transaction,
@@ -329,7 +330,7 @@ typedef struct PLpgSQL_nsitem
 	int			itemtype;
 	int			itemno;
 	struct PLpgSQL_nsitem *prev;
-	char		name[1];		/* actually, as long as needed */
+	char		name[FLEXIBLE_ARRAY_MEMBER];	/* nul-terminated string */
 } PLpgSQL_nsitem;
 
 

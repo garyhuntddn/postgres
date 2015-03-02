@@ -28,6 +28,14 @@
 #include "utils/syscache.h"
 #include "utils/typcache.h"
 
+/*
+ * String to output for infinite dates and timestamps.
+ * Note the we don't use embedded quotes, unlike for json, because
+ * we store jsonb strings dequoted.
+ */
+
+#define DT_INFINITY "infinity"
+
 typedef struct JsonbInState
 {
 	JsonbParseState *parseState;
@@ -416,7 +424,7 @@ JsonbToCString(StringInfo out, JsonbContainer *in, int estimated_len)
 {
 	bool		first = true;
 	JsonbIterator *it;
-	int			type = 0;
+	JsonbIteratorToken type = WJB_DONE;
 	JsonbValue	v;
 	int			level = 0;
 	bool		redo_switch = false;
@@ -498,7 +506,7 @@ JsonbToCString(StringInfo out, JsonbContainer *in, int estimated_len)
 				first = false;
 				break;
 			default:
-				elog(ERROR, "unknown flag of jsonb iterator");
+				elog(ERROR, "unknown jsonb iterator token type");
 		}
 	}
 
@@ -715,23 +723,21 @@ datum_to_jsonb(Datum val, bool is_null, JsonbInState *result,
 				char		buf[MAXDATELEN + 1];
 
 				date = DatumGetDateADT(val);
+				jb.type = jbvString;
 
-				/* XSD doesn't support infinite values */
 				if (DATE_NOT_FINITE(date))
-					ereport(ERROR,
-							(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
-							 errmsg("date out of range"),
-							 errdetail("JSON does not support infinite date values.")));
+				{
+					jb.val.string.len = strlen(DT_INFINITY);
+					jb.val.string.val = pstrdup(DT_INFINITY);
+				}
 				else
 				{
 					j2date(date + POSTGRES_EPOCH_JDATE,
 						   &(tm.tm_year), &(tm.tm_mon), &(tm.tm_mday));
 					EncodeDateOnly(&tm, USE_XSD_DATES, buf);
+					jb.val.string.len = strlen(buf);
+					jb.val.string.val = pstrdup(buf);
 				}
-
-				jb.type = jbvString;
-				jb.val.string.len = strlen(buf);
-				jb.val.string.val = pstrdup(buf);
 			}
 			break;
 			case JSONBTYPE_TIMESTAMP:
@@ -742,23 +748,24 @@ datum_to_jsonb(Datum val, bool is_null, JsonbInState *result,
 					char		buf[MAXDATELEN + 1];
 
 					timestamp = DatumGetTimestamp(val);
+					jb.type = jbvString;
 
-					/* XSD doesn't support infinite values */
 					if (TIMESTAMP_NOT_FINITE(timestamp))
-						ereport(ERROR,
-								(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
-								 errmsg("timestamp out of range"),
-								 errdetail("JSON does not support infinite timestamp values.")));
+					{
+						jb.val.string.len = strlen(DT_INFINITY);
+						jb.val.string.val = pstrdup(DT_INFINITY);
+					}
 					else if (timestamp2tm(timestamp, NULL, &tm, &fsec, NULL, NULL) == 0)
+					{
+
 						EncodeDateTime(&tm, fsec, false, 0, NULL, USE_XSD_DATES, buf);
+						jb.val.string.len = strlen(buf);
+						jb.val.string.val = pstrdup(buf);
+					}
 					else
 						ereport(ERROR,
 								(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
 								 errmsg("timestamp out of range")));
-
-					jb.type = jbvString;
-					jb.val.string.len = strlen(buf);
-					jb.val.string.val = pstrdup(buf);
 				}
 				break;
 			case JSONBTYPE_TIMESTAMPTZ:
@@ -771,23 +778,23 @@ datum_to_jsonb(Datum val, bool is_null, JsonbInState *result,
 					char		buf[MAXDATELEN + 1];
 
 					timestamp = DatumGetTimestamp(val);
+					jb.type = jbvString;
 
-					/* XSD doesn't support infinite values */
 					if (TIMESTAMP_NOT_FINITE(timestamp))
-						ereport(ERROR,
-								(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
-								 errmsg("timestamp out of range"),
-								 errdetail("JSON does not support infinite timestamp values.")));
+					{
+						jb.val.string.len = strlen(DT_INFINITY);
+						jb.val.string.val = pstrdup(DT_INFINITY);
+					}
 					else if (timestamp2tm(timestamp, &tz, &tm, &fsec, &tzn, NULL) == 0)
+					{
 						EncodeDateTime(&tm, fsec, true, tz, tzn, USE_XSD_DATES, buf);
+						jb.val.string.len = strlen(buf);
+						jb.val.string.val = pstrdup(buf);
+					}
 					else
 						ereport(ERROR,
 								(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
 								 errmsg("timestamp out of range")));
-
-					jb.type = jbvString;
-					jb.val.string.len = strlen(buf);
-					jb.val.string.val = pstrdup(buf);
 				}
 				break;
 			case JSONBTYPE_JSONCAST:
@@ -818,7 +825,7 @@ datum_to_jsonb(Datum val, bool is_null, JsonbInState *result,
 			case JSONBTYPE_JSONB:
 				{
 					Jsonb	   *jsonb = DatumGetJsonb(val);
-					int			type;
+					JsonbIteratorToken type;
 					JsonbIterator *it;
 
 					it = JsonbIteratorInit(&jsonb->root);
@@ -1513,7 +1520,7 @@ jsonb_agg_transfn(PG_FUNCTION_ARGS)
 	JsonbIterator *it;
 	Jsonb	   *jbelem;
 	JsonbValue	v;
-	int			type;
+	JsonbIteratorToken type;
 
 	if (val_type == InvalidOid)
 		ereport(ERROR,
@@ -1585,7 +1592,7 @@ jsonb_agg_transfn(PG_FUNCTION_ARGS)
 			case WJB_VALUE:
 				if (v.type == jbvString)
 				{
-					/* copy string values in the aggreagate context */
+					/* copy string values in the aggregate context */
 					char	   *buf = palloc(v.val.string.len + 1);;
 					snprintf(buf, v.val.string.len + 1, "%s", v.val.string.val);
 					v.val.string.val = buf;
@@ -1601,6 +1608,8 @@ jsonb_agg_transfn(PG_FUNCTION_ARGS)
 				result->res = pushJsonbValue(&result->parseState,
 											 type, &v);
 				break;
+			default:
+				elog(ERROR, "unknown jsonb iterator token type");
 		}
 	}
 
@@ -1661,7 +1670,7 @@ jsonb_object_agg_transfn(PG_FUNCTION_ARGS)
 	Jsonb	   *jbkey,
 			   *jbval;
 	JsonbValue	v;
-	int			type;
+	JsonbIteratorToken type;
 
 	if (!AggCheckCallContext(fcinfo, &aggcontext))
 	{
@@ -1744,7 +1753,7 @@ jsonb_object_agg_transfn(PG_FUNCTION_ARGS)
 			case WJB_ELEM:
 				if (v.type == jbvString)
 				{
-					/* copy string values in the aggreagate context */
+					/* copy string values in the aggregate context */
 					char	   *buf = palloc(v.val.string.len + 1);;
 					snprintf(buf, v.val.string.len + 1, "%s", v.val.string.val);
 					v.val.string.val = buf;
@@ -1802,7 +1811,7 @@ jsonb_object_agg_transfn(PG_FUNCTION_ARGS)
 			case WJB_VALUE:
 				if (v.type == jbvString)
 				{
-					/* copy string values in the aggreagate context */
+					/* copy string values in the aggregate context */
 					char	   *buf = palloc(v.val.string.len + 1);;
 					snprintf(buf, v.val.string.len + 1, "%s", v.val.string.val);
 					v.val.string.val = buf;
@@ -1819,6 +1828,8 @@ jsonb_object_agg_transfn(PG_FUNCTION_ARGS)
 											 single_scalar ? WJB_VALUE : type,
 											 &v);
 				break;
+			default:
+				elog(ERROR, "unknown jsonb iterator token type");
 		}
 	}
 
