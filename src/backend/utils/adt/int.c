@@ -734,6 +734,114 @@ int42ge(PG_FUNCTION_ARGS)
  */
 
 Datum
+int14eq(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_BOOL(arg1 == arg2);
+}
+
+Datum
+int14ne(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_BOOL(arg1 != arg2);
+}
+
+Datum
+int14lt(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_BOOL(arg1 < arg2);
+}
+
+Datum
+int14le(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_BOOL(arg1 <= arg2);
+}
+
+Datum
+int14gt(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_BOOL(arg1 > arg2);
+}
+
+Datum
+int14ge(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	PG_RETURN_BOOL(arg1 >= arg2);
+}
+
+Datum
+int41eq(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 == arg2);
+}
+
+Datum
+int41ne(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 != arg2);
+}
+
+Datum
+int41lt(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 < arg2);
+}
+
+Datum
+int41le(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 <= arg2);
+}
+
+Datum
+int41gt(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 > arg2);
+}
+
+Datum
+int41ge(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+
+	PG_RETURN_BOOL(arg1 >= arg2);
+}
+
+Datum
 int4um(PG_FUNCTION_ARGS)
 {
 	int32		arg = PG_GETARG_INT32(0);
@@ -1299,6 +1407,209 @@ int42div(PG_FUNCTION_ARGS)
 {
 	int32		arg1 = PG_GETARG_INT32(0);
 	int16		arg2 = PG_GETARG_INT16(1);
+	int32		result;
+
+	if (arg2 == 0)
+	{
+		ereport(ERROR,
+				(errcode(ERRCODE_DIVISION_BY_ZERO),
+				 errmsg("division by zero")));
+		/* ensure compiler realizes we mustn't reach the division (gcc bug) */
+		PG_RETURN_NULL();
+	}
+
+	/*
+	 * INT_MIN / -1 is problematic, since the result can't be represented on a
+	 * two's-complement machine.  Some machines produce INT_MIN, some produce
+	 * zero, some throw an exception.  We can dodge the problem by recognizing
+	 * that division by -1 is the same as negation.
+	 */
+	if (arg2 == -1)
+	{
+		result = -arg1;
+		/* overflow check (needed for INT_MIN) */
+		if (arg1 != 0 && SAMESIGN(result, arg1))
+			ereport(ERROR,
+					(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+					 errmsg("integer out of range")));
+		PG_RETURN_INT32(result);
+	}
+
+	/* No overflow is possible */
+
+	result = arg1 / arg2;
+
+	PG_RETURN_INT32(result);
+}
+
+
+
+
+
+
+
+Datum
+int14pl(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+	int32		result;
+
+	result = arg1 + arg2;
+
+	/*
+	 * Overflow check.  If the inputs are of different signs then their sum
+	 * cannot overflow.  If the inputs are of the same sign, their sum had
+	 * better be that sign too.
+	 */
+	if (SAMESIGN(arg1, arg2) && !SAMESIGN(result, arg1))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("integer out of range")));
+	PG_RETURN_INT32(result);
+}
+
+Datum
+int14mi(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+	int32		result;
+
+	result = arg1 - arg2;
+
+	/*
+	 * Overflow check.  If the inputs are of the same sign then their
+	 * difference cannot overflow.  If they are of different signs then the
+	 * result should be of the same sign as the first input.
+	 */
+	if (!SAMESIGN(arg1, arg2) && !SAMESIGN(result, arg1))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("integer out of range")));
+	PG_RETURN_INT32(result);
+}
+
+Datum
+int14mul(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+	int32		result;
+
+	result = arg1 * arg2;
+
+	/*
+	 * Overflow check.  We basically check to see if result / arg2 gives arg1
+	 * again.  There is one case where this fails: arg2 = 0 (which cannot
+	 * overflow).
+	 *
+	 * Since the division is likely much more expensive than the actual
+	 * multiplication, we'd like to skip it where possible.  The best bang for
+	 * the buck seems to be to check whether both inputs are in the int16
+	 * range; if so, no overflow is possible.
+	 */
+	if (!(arg2 >= (int32) SHRT_MIN && arg2 <= (int32) SHRT_MAX) &&
+		result / arg2 != arg1)
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("integer out of range")));
+	PG_RETURN_INT32(result);
+}
+
+Datum
+int14div(PG_FUNCTION_ARGS)
+{
+	uint8		arg1 = PG_GETARG_UINT8(0);
+	int32		arg2 = PG_GETARG_INT32(1);
+
+	if (arg2 == 0)
+	{
+		ereport(ERROR,
+				(errcode(ERRCODE_DIVISION_BY_ZERO),
+				 errmsg("division by zero")));
+		/* ensure compiler realizes we mustn't reach the division (gcc bug) */
+		PG_RETURN_NULL();
+	}
+
+	/* No overflow is possible */
+	PG_RETURN_INT32((int32) arg1 / arg2);
+}
+
+Datum
+int41pl(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+	int32		result;
+
+	result = arg1 + arg2;
+
+	/*
+	 * Overflow check.  If the inputs are of different signs then their sum
+	 * cannot overflow.  If the inputs are of the same sign, their sum had
+	 * better be that sign too.
+	 */
+	if (SAMESIGN(arg1, arg2) && !SAMESIGN(result, arg1))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("integer out of range")));
+	PG_RETURN_INT32(result);
+}
+
+Datum
+int41mi(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+	int32		result;
+
+	result = arg1 - arg2;
+
+	/*
+	 * Overflow check.  If the inputs are of the same sign then their
+	 * difference cannot overflow.  If they are of different signs then the
+	 * result should be of the same sign as the first input.
+	 */
+	if (!SAMESIGN(arg1, arg2) && !SAMESIGN(result, arg1))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("integer out of range")));
+	PG_RETURN_INT32(result);
+}
+
+Datum
+int41mul(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
+	int32		result;
+
+	result = arg1 * arg2;
+
+	/*
+	 * Overflow check.  We basically check to see if result / arg1 gives arg2
+	 * again.  There is one case where this fails: arg1 = 0 (which cannot
+	 * overflow).
+	 *
+	 * Since the division is likely much more expensive than the actual
+	 * multiplication, we'd like to skip it where possible.  The best bang for
+	 * the buck seems to be to check whether both inputs are in the int16
+	 * range; if so, no overflow is possible.
+	 */
+	if (!(arg1 >= (int32) SHRT_MIN && arg1 <= (int32) SHRT_MAX) &&
+		result / arg1 != arg2)
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("integer out of range")));
+	PG_RETURN_INT32(result);
+}
+
+Datum
+int41div(PG_FUNCTION_ARGS)
+{
+	int32		arg1 = PG_GETARG_INT32(0);
+	uint8		arg2 = PG_GETARG_UINT8(1);
 	int32		result;
 
 	if (arg2 == 0)

@@ -58,12 +58,26 @@ extern Datum int82gt(PG_FUNCTION_ARGS);
 extern Datum int82le(PG_FUNCTION_ARGS);
 extern Datum int82ge(PG_FUNCTION_ARGS);
 
+extern Datum int81eq(PG_FUNCTION_ARGS);
+extern Datum int81ne(PG_FUNCTION_ARGS);
+extern Datum int81lt(PG_FUNCTION_ARGS);
+extern Datum int81gt(PG_FUNCTION_ARGS);
+extern Datum int81le(PG_FUNCTION_ARGS);
+extern Datum int81ge(PG_FUNCTION_ARGS);
+
 extern Datum int28eq(PG_FUNCTION_ARGS);
 extern Datum int28ne(PG_FUNCTION_ARGS);
 extern Datum int28lt(PG_FUNCTION_ARGS);
 extern Datum int28gt(PG_FUNCTION_ARGS);
 extern Datum int28le(PG_FUNCTION_ARGS);
 extern Datum int28ge(PG_FUNCTION_ARGS);
+
+extern Datum int18eq(PG_FUNCTION_ARGS);
+extern Datum int18ne(PG_FUNCTION_ARGS);
+extern Datum int18lt(PG_FUNCTION_ARGS);
+extern Datum int18gt(PG_FUNCTION_ARGS);
+extern Datum int18le(PG_FUNCTION_ARGS);
+extern Datum int18ge(PG_FUNCTION_ARGS);
 
 extern Datum int8um(PG_FUNCTION_ARGS);
 extern Datum int8up(PG_FUNCTION_ARGS);
@@ -103,16 +117,29 @@ extern Datum int82mi(PG_FUNCTION_ARGS);
 extern Datum int82mul(PG_FUNCTION_ARGS);
 extern Datum int82div(PG_FUNCTION_ARGS);
 
+extern Datum int81pl(PG_FUNCTION_ARGS);
+extern Datum int81mi(PG_FUNCTION_ARGS);
+extern Datum int81mul(PG_FUNCTION_ARGS);
+extern Datum int81div(PG_FUNCTION_ARGS);
+
 extern Datum int28pl(PG_FUNCTION_ARGS);
 extern Datum int28mi(PG_FUNCTION_ARGS);
 extern Datum int28mul(PG_FUNCTION_ARGS);
 extern Datum int28div(PG_FUNCTION_ARGS);
+
+extern Datum int18pl(PG_FUNCTION_ARGS);
+extern Datum int18mi(PG_FUNCTION_ARGS);
+extern Datum int18mul(PG_FUNCTION_ARGS);
+extern Datum int18div(PG_FUNCTION_ARGS);
 
 extern Datum int48(PG_FUNCTION_ARGS);
 extern Datum int84(PG_FUNCTION_ARGS);
 
 extern Datum int28(PG_FUNCTION_ARGS);
 extern Datum int82(PG_FUNCTION_ARGS);
+
+extern Datum int18(PG_FUNCTION_ARGS);
+extern Datum int81(PG_FUNCTION_ARGS);
 
 extern Datum i8tod(PG_FUNCTION_ARGS);
 extern Datum dtoi8(PG_FUNCTION_ARGS);

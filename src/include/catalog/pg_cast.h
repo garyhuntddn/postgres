@@ -95,45 +95,45 @@ typedef enum CoercionMethod
  * reverse direction are assignment-only.
  */
 
-// TODO: INT1 in here
-DATA(insert (	20	 6021  6714 a f )); // TODO: int81 (need new OID for 6714)
 DATA(insert (	20	 21  714 a f ));
+DATA(insert (	20 6021 6714 a f ));
 DATA(insert (	20	 23  480 a f ));
 DATA(insert (	20	700  652 i f ));
 DATA(insert (	20	701  482 i f ));
 DATA(insert (	20 1700 1781 i f ));
 DATA(insert (	21	 20  754 i f ));
+DATA(insert (	21 6021 6754 i f ));
 DATA(insert (	21	 23  313 i f ));
 DATA(insert (	21	700  236 i f ));
 DATA(insert (	21	701  235 i f ));
 DATA(insert (	21 1700 1782 i f ));
-DATA(insert (	6021	 20  754 i f )); // TODO: int28 (need new OID for 6714)
-DATA(insert (	6021	 21  754 i f )); // TODO: int12 (need new OID for 6714)
-DATA(insert (	6021	 23  313 i f )); // TODO: i2toi4 (need new OID for 6714)
-DATA(insert (	6021	700  236 i f )); // TODO: i2tof (need new OID for 6714)
-DATA(insert (	6021	701  235 i f )); // TODO: i2tod (need new OID for 6714)
-DATA(insert (	6021 1700 1782 i f )); // TODO: int2_numeric (need new OID for 6714)
+DATA(insert (	6021	 20 6754 i f ));
+DATA(insert (	6021	 21 6754 i f ));
+DATA(insert (	6021	 23 6313 i f ));
+DATA(insert (	6021	700 6236 i f ));
+DATA(insert (	6021	701 6235 i f ));
+DATA(insert (	6021 1700 7782 i f ));
 DATA(insert (	23	 20  481 i f ));
 DATA(insert (	23	 21  314 a f ));
-DATA(insert (	23	 6021  314 a f )); // TODO
+DATA(insert (	23 6021 6314 a f ));
 DATA(insert (	23	700  318 i f ));
 DATA(insert (	23	701  316 i f ));
 DATA(insert (	23 1700 1740 i f ));
 DATA(insert (  700	 20  653 a f ));
 DATA(insert (  700	 21  238 a f ));
-DATA(insert (  700	 6021  238 a f )); // TODO
+DATA(insert (  700 6021 6238 a f ));
 DATA(insert (  700	 23  319 a f ));
 DATA(insert (  700	701  311 i f ));
 DATA(insert (  700 1700 1742 a f ));
 DATA(insert (  701	 20  483 a f ));
 DATA(insert (  701	 21  237 a f ));
-DATA(insert (  701	 6021  237 a f )); // TODO
+DATA(insert (  701 6021 6237 a f ));
 DATA(insert (  701	 23  317 a f ));
 DATA(insert (  701	700  312 a f ));
 DATA(insert (  701 1700 1743 a f ));
 DATA(insert ( 1700	 20 1779 a f ));
 DATA(insert ( 1700	 21 1783 a f ));
-DATA(insert ( 1700	 6021 1783 a f )); // TODO
+DATA(insert ( 1700 6021 7783 a f ));
 DATA(insert ( 1700	 23 1744 a f ));
 DATA(insert ( 1700	700 1745 i f ));
 DATA(insert ( 1700	701 1746 i f ));
@@ -157,9 +157,9 @@ DATA(insert (	16	23	2558 e f ));
  * legacy forms of nextval() and related functions.
  */
 
-// TODO: INT1 in here
 DATA(insert (	20	 26 1287 i f ));
 DATA(insert (	21	 26  313 i f ));
+DATA(insert (	6021 26 6313 i f ));
 DATA(insert (	23	 26    0 i b ));
 DATA(insert (	26	 20 1288 a f ));
 DATA(insert (	26	 23    0 a b ));
@@ -167,63 +167,66 @@ DATA(insert (	26	 24    0 i b ));
 DATA(insert (	24	 26    0 i b ));
 DATA(insert (	20	 24 1287 i f ));
 DATA(insert (	21	 24  313 i f ));
+DATA(insert (	6021 24 6313 i f ));
 DATA(insert (	23	 24    0 i b ));
 DATA(insert (	24	 20 1288 a f ));
 DATA(insert (	24	 23    0 a b ));
-DATA(insert (	24 2202    0 i b ));
-DATA(insert ( 2202	 24    0 i b ));
-DATA(insert (	26 2202    0 i b ));
-DATA(insert ( 2202	 26    0 i b ));
-DATA(insert (	20 2202 1287 i f ));
-DATA(insert (	21 2202  313 i f ));
-DATA(insert (	23 2202    0 i b ));
-DATA(insert ( 2202	 20 1288 a f ));
-DATA(insert ( 2202	 23    0 a b ));
-DATA(insert (	26 2203    0 i b ));
-DATA(insert ( 2203	 26    0 i b ));
-DATA(insert (	20 2203 1287 i f ));
-DATA(insert (	21 2203  313 i f ));
-DATA(insert (	23 2203    0 i b ));
-DATA(insert ( 2203	 20 1288 a f ));
-DATA(insert ( 2203	 23    0 a b ));
+DATA(insert (	24   2202  0 i b ));
+DATA(insert ( 2202 24    0 i b ));
+DATA(insert (	26   2202    0 i b ));
+DATA(insert ( 2202 26    0 i b ));
+DATA(insert (	20   2202 1287 i f ));
+DATA(insert (	6021 2202 6313 i f ));
+DATA(insert (	23   2202    0 i b ));
+DATA(insert ( 2202 20 1288 a f ));
+DATA(insert ( 2202 23    0 a b ));
+DATA(insert (	26   2203    0 i b ));
+DATA(insert ( 2203 26    0 i b ));
+DATA(insert (	20   2203 1287 i f ));
+DATA(insert (	6021 2203 6313 i f ));
+DATA(insert (	23   2203    0 i b ));
+DATA(insert ( 2203 20 1288 a f ));
+DATA(insert ( 2203 23    0 a b ));
 DATA(insert ( 2203 2204    0 i b ));
 DATA(insert ( 2204 2203    0 i b ));
-DATA(insert (	26 2204    0 i b ));
+DATA(insert (	26   2204    0 i b ));
 DATA(insert ( 2204	 26    0 i b ));
-DATA(insert (	20 2204 1287 i f ));
-DATA(insert (	21 2204  313 i f ));
-DATA(insert (	23 2204    0 i b ));
+DATA(insert (	20   2204 1287 i f ));
+DATA(insert (	6021 2204 6313 i f ));
+DATA(insert (	23   2204    0 i b ));
 DATA(insert ( 2204	 20 1288 a f ));
 DATA(insert ( 2204	 23    0 a b ));
-DATA(insert (	26 2205    0 i b ));
+DATA(insert (	26   2205    0 i b ));
 DATA(insert ( 2205	 26    0 i b ));
-DATA(insert (	20 2205 1287 i f ));
-DATA(insert (	21 2205  313 i f ));
-DATA(insert (	23 2205    0 i b ));
+DATA(insert (	20   2205 1287 i f ));
+DATA(insert (	6021 2205 6313 i f ));
+DATA(insert (	23   2205    0 i b ));
 DATA(insert ( 2205	 20 1288 a f ));
 DATA(insert ( 2205	 23    0 a b ));
-DATA(insert (	26 2206    0 i b ));
+DATA(insert (	26   2206    0 i b ));
 DATA(insert ( 2206	 26    0 i b ));
-DATA(insert (	20 2206 1287 i f ));
-DATA(insert (	21 2206  313 i f ));
-DATA(insert (	23 2206    0 i b ));
+DATA(insert (	20   2206 1287 i f ));
+DATA(insert (	6021 2206 6313 i f ));
+DATA(insert (	23   2206    0 i b ));
 DATA(insert ( 2206	 20 1288 a f ));
 DATA(insert ( 2206	 23    0 a b ));
-DATA(insert (	26 3734    0 i b ));
+DATA(insert (	26   3734    0 i b ));
 DATA(insert ( 3734	 26    0 i b ));
-DATA(insert (	20 3734 1287 i f ));
-DATA(insert (	21 3734  313 i f ));
-DATA(insert (	23 3734    0 i b ));
+DATA(insert (	20   3734 1287 i f ));
+DATA(insert (	21   3734  313 i f ));
+DATA(insert (	6021 3734 6313 i f ));
+DATA(insert (	23   3734    0 i b ));
 DATA(insert ( 3734	 20 1288 a f ));
 DATA(insert ( 3734	 23    0 a b ));
-DATA(insert (	26 3769    0 i b ));
+DATA(insert (	26   3769    0 i b ));
 DATA(insert ( 3769	 26    0 i b ));
-DATA(insert (	20 3769 1287 i f ));
-DATA(insert (	21 3769  313 i f ));
-DATA(insert (	23 3769    0 i b ));
+DATA(insert (	20   3769 1287 i f ));
+DATA(insert (	21   3769  313 i f ));
+DATA(insert (	6021 3769 6313 i f ));
+DATA(insert (	23   3769    0 i b ));
 DATA(insert ( 3769	 20 1288 a f ));
 DATA(insert ( 3769	 23    0 a b ));
-DATA(insert (	25 2205 1079 i f ));
+DATA(insert (	25   2205 1079 i f ));
 DATA(insert ( 1043 2205 1079 i f ));
 
 /*

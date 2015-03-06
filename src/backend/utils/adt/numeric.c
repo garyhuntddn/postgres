@@ -3506,7 +3506,7 @@ int1_sum(PG_FUNCTION_ARGS)
 
 		/* Leave the running sum unchanged in the new input is null */
 		if (!PG_ARGISNULL(1))
-			*oldsum = *oldsum + (int64) PG_GETARG_INT8(1);
+			*oldsum = *oldsum + (int64) PG_GETARG_UINT8(1);
 
 		PG_RETURN_POINTER(oldsum);
 	}

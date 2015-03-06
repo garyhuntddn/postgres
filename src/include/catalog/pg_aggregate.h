@@ -146,17 +146,17 @@ DATA(insert ( 2113	n 0 interval_pl		-				interval_pl		interval_mi		-				f f 0	11
 DATA(insert ( 2114	n 0 numeric_avg_accum	numeric_sum numeric_avg_accum numeric_accum_inv numeric_sum f f 0	2281	128 2281	128 _null_ _null_ ));
 
 /* max */
-DATA(insert ( 2115	n 0 int8larger		-				-				-				-				f f 413		20		0	0		0	_null_ _null_ ));
-DATA(insert ( 2116	n 0 int4larger		-				-				-				-				f f 521		23		0	0		0	_null_ _null_ ));
-DATA(insert ( 2117	n 0 int2larger		-				-				-				-				f f 520		21		0	0		0	_null_ _null_ ));
-DATA(insert ( 8117	n 0 int1larger		-				-				-				-				f f 6520		6021		0	0		0	_null_ _null_ )); // TODO: 520=?
-DATA(insert ( 2118	n 0 oidlarger		-				-				-				-				f f 610		26		0	0		0	_null_ _null_ ));
+DATA(insert ( 2115	n 0 int8larger		-				-				-				-				f f 413		 20		0	0		0	_null_ _null_ ));
+DATA(insert ( 2116	n 0 int4larger		-				-				-				-				f f 521		 23		0	0		0	_null_ _null_ ));
+DATA(insert ( 2117	n 0 int2larger		-				-				-				-				f f 520		 21		0	0		0	_null_ _null_ ));
+DATA(insert ( 8117	n 0 int1larger		-				-				-				-				f f 6520 6021		0	0		0	_null_ _null_ ));
+DATA(insert ( 2118	n 0 oidlarger		  -				-				-				-				f f 610		 26		0	0		0	_null_ _null_ ));
 DATA(insert ( 2119	n 0 float4larger	-				-				-				-				f f 623		700		0	0		0	_null_ _null_ ));
 DATA(insert ( 2120	n 0 float8larger	-				-				-				-				f f 674		701		0	0		0	_null_ _null_ ));
 DATA(insert ( 2121	n 0 int4larger		-				-				-				-				f f 563		702		0	0		0	_null_ _null_ ));
-DATA(insert ( 2122	n 0 date_larger		-				-				-				-				f f 1097	1082	0	0		0	_null_ _null_ ));
-DATA(insert ( 2123	n 0 time_larger		-				-				-				-				f f 1112	1083	0	0		0	_null_ _null_ ));
-DATA(insert ( 2124	n 0 timetz_larger	-				-				-				-				f f 1554	1266	0	0		0	_null_ _null_ ));
+DATA(insert ( 2122	n 0 date_larger		-				-				-				-				f f 1097 1082	  0	0		0	_null_ _null_ ));
+DATA(insert ( 2123	n 0 time_larger		-				-				-				-				f f 1112 1083	  0	0		0	_null_ _null_ ));
+DATA(insert ( 2124	n 0 timetz_larger	-				-				-				-				f f 1554 1266	  0	0		0	_null_ _null_ ));
 DATA(insert ( 2125	n 0 cashlarger		-				-				-				-				f f 903		790		0	0		0	_null_ _null_ ));
 DATA(insert ( 2126	n 0 timestamp_larger	-			-				-				-				f f 2064	1114	0	0		0	_null_ _null_ ));
 DATA(insert ( 2127	n 0 timestamptz_larger	-			-				-				-				f f 1324	1184	0	0		0	_null_ _null_ ));
@@ -173,7 +173,7 @@ DATA(insert ( 3564	n 0 network_larger	-				-				-				-				f f 1205	869		0	0		0	_
 DATA(insert ( 2131	n 0 int8smaller		-				-				-				-				f f 412		20		0	0		0	_null_ _null_ ));
 DATA(insert ( 2132	n 0 int4smaller		-				-				-				-				f f 97		23		0	0		0	_null_ _null_ ));
 DATA(insert ( 2133	n 0 int2smaller		-				-				-				-				f f 95		21		0	0		0	_null_ _null_ ));
-DATA(insert ( 8133	n 0 int1smaller		-				-				-				-				f f 6095		6021		0	0		0	_null_ _null_ )); // TODO: 95=?
+DATA(insert ( 8133	n 0 int1smaller		-				-				-				-				f f 6095		6021		0	0		0	_null_ _null_ ));
 DATA(insert ( 2134	n 0 oidsmaller		-				-				-				-				f f 609		26		0	0		0	_null_ _null_ ));
 DATA(insert ( 2135	n 0 float4smaller	-				-				-				-				f f 622		700		0	0		0	_null_ _null_ ));
 DATA(insert ( 2136	n 0 float8smaller	-				-				-				-				f f 672		701		0	0		0	_null_ _null_ ));
@@ -272,8 +272,8 @@ DATA(insert ( 2519	n 0 booland_statefunc	-			bool_accum		bool_accum_inv	bool_all
 
 /* bitwise integer */
 DATA(insert ( 2236	n 0 int2and		-					-				-				-				f f 0	21		0	0		0	_null_ _null_ ));
-DATA(insert ( 2237	n 0 int2or		-					-				-				-				f f 0	21		0	0		0	_null_ _null_ ));
 DATA(insert ( 8236	n 0 int1and		-					-				-				-				f f 0	6021		0	0		0	_null_ _null_ ));
+DATA(insert ( 2237	n 0 int2or		-					-				-				-				f f 0	21		0	0		0	_null_ _null_ ));
 DATA(insert ( 8237	n 0 int1or		-					-				-				-				f f 0	6021		0	0		0	_null_ _null_ ));
 DATA(insert ( 2238	n 0 int4and		-					-				-				-				f f 0	23		0	0		0	_null_ _null_ ));
 DATA(insert ( 2239	n 0 int4or		-					-				-				-				f f 0	23		0	0		0	_null_ _null_ ));

@@ -106,23 +106,35 @@ DATA(insert (	1976   21 21 3 s	94	403 0 ));
 DATA(insert (	1976   21 21 4 s	524 403 0 ));
 DATA(insert (	1976   21 21 5 s	520 403 0 ));
 /* default operators int1 */
-DATA(insert (	1976   6021 6021 1 s	6095	403 0 )); // 95?
-DATA(insert (	1976   6021 6021 2 s	6522 403 0 )); // 522?
-DATA(insert (	1976   6021 6021 3 s	6094	403 0 )); // 94?
-DATA(insert (	1976   6021 6021 4 s	6524 403 0 )); // 524?
-DATA(insert (	1976   6021 6021 5 s	6520 403 0 )); // 520?
+DATA(insert (	1976   6021 6021 1 s	6095 403 0 ));
+DATA(insert (	1976   6021 6021 2 s	6522 403 0 ));
+DATA(insert (	1976   6021 6021 3 s	6094 403 0 ));
+DATA(insert (	1976   6021 6021 4 s	6524 403 0 ));
+DATA(insert (	1976   6021 6021 5 s	6520 403 0 ));
 /* crosstype operators int24 */
 DATA(insert (	1976   21 23 1 s	534 403 0 ));
 DATA(insert (	1976   21 23 2 s	540 403 0 ));
 DATA(insert (	1976   21 23 3 s	532 403 0 ));
 DATA(insert (	1976   21 23 4 s	542 403 0 ));
 DATA(insert (	1976   21 23 5 s	536 403 0 ));
+/* crosstype operators int14 */
+DATA(insert (	1976 6021 23 1 s 6534 403 0 ));
+DATA(insert (	1976 6021 23 2 s 6540 403 0 ));
+DATA(insert (	1976 6021 23 3 s 6532 403 0 ));
+DATA(insert (	1976 6021 23 4 s 6542 403 0 ));
+DATA(insert (	1976 6021 23 5 s 6536 403 0 ));
 /* crosstype operators int28 */
 DATA(insert (	1976   21 20 1 s	1864	403 0 ));
 DATA(insert (	1976   21 20 2 s	1866	403 0 ));
 DATA(insert (	1976   21 20 3 s	1862	403 0 ));
 DATA(insert (	1976   21 20 4 s	1867	403 0 ));
 DATA(insert (	1976   21 20 5 s	1865	403 0 ));
+/* crosstype operators int18 */
+DATA(insert (	1976 6021 20 1 s	7864	403 0 ));
+DATA(insert (	1976 6021 20 2 s	7866	403 0 ));
+DATA(insert (	1976 6021 20 3 s	7862	403 0 ));
+DATA(insert (	1976 6021 20 4 s	7867	403 0 ));
+DATA(insert (	1976 6021 20 5 s	7865	403 0 ));
 /* default operators int4 */
 DATA(insert (	1976   23 23 1 s	97	403 0 ));
 DATA(insert (	1976   23 23 2 s	523 403 0 ));
@@ -135,6 +147,12 @@ DATA(insert (	1976   23 21 2 s	541 403 0 ));
 DATA(insert (	1976   23 21 3 s	533 403 0 ));
 DATA(insert (	1976   23 21 4 s	543 403 0 ));
 DATA(insert (	1976   23 21 5 s	537 403 0 ));
+/* crosstype operators int41 */
+DATA(insert (	1976   23 6021 1 s 6535 403 0 ));
+DATA(insert (	1976   23 6021 2 s 6541 403 0 ));
+DATA(insert (	1976   23 6021 3 s 6533 403 0 ));
+DATA(insert (	1976   23 6021 4 s 6543 403 0 ));
+DATA(insert (	1976   23 6021 5 s 6537 403 0 ));
 /* crosstype operators int48 */
 DATA(insert (	1976   23 20 1 s	37	403 0 ));
 DATA(insert (	1976   23 20 2 s	80	403 0 ));
@@ -153,6 +171,12 @@ DATA(insert (	1976   20 21 2 s	1872	403 0 ));
 DATA(insert (	1976   20 21 3 s	1868	403 0 ));
 DATA(insert (	1976   20 21 4 s	1873	403 0 ));
 DATA(insert (	1976   20 21 5 s	1871	403 0 ));
+/* crosstype operators int82 */
+DATA(insert (	1976   20 6021 1 s	7870	403 0 ));
+DATA(insert (	1976   20 6021 2 s	7872	403 0 ));
+DATA(insert (	1976   20 6021 3 s	7868	403 0 ));
+DATA(insert (	1976   20 6021 4 s	7873	403 0 ));
+DATA(insert (	1976   20 6021 5 s	7871	403 0 ));
 /* crosstype operators int84 */
 DATA(insert (	1976   20 23 1 s	418 403 0 ));
 DATA(insert (	1976   20 23 2 s	420 403 0 ));

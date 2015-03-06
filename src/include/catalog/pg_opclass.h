@@ -113,6 +113,7 @@ DATA(insert (	405		float8_ops			PGNSP PGUID 1971  701 t 0 ));
 DATA(insert (	403		inet_ops			PGNSP PGUID 1974  869 t 0 ));
 DATA(insert (	405		inet_ops			PGNSP PGUID 1975  869 t 0 ));
 DATA(insert (	783		inet_ops			PGNSP PGUID 3550  869 f 0 ));
+DATA(insert OID = 7979 ( 403	int1_ops	PGNSP PGUID 1976   6021 t 0 ));
 DATA(insert OID = 1979 ( 403	int2_ops	PGNSP PGUID 1976   21 t 0 ));
 // TODO: INT1 in here
 #define INT2_BTREE_OPS_OID 1979
@@ -197,6 +198,7 @@ DATA(insert (	2742	_date_ops			PGNSP PGUID 2745  1182 t 1082 ));
 DATA(insert (	2742	_float4_ops			PGNSP PGUID 2745  1021 t 700 ));
 DATA(insert (	2742	_float8_ops			PGNSP PGUID 2745  1022 t 701 ));
 DATA(insert (	2742	_inet_ops			PGNSP PGUID 2745  1041 t 869 ));
+DATA(insert (	2742	_int1_ops			PGNSP PGUID 2745  7005 t 6021 ));
 DATA(insert (	2742	_int2_ops			PGNSP PGUID 2745  1005 t 21 ));
 DATA(insert (	2742	_int8_ops			PGNSP PGUID 2745  1016 t 20 ));
 DATA(insert (	2742	_interval_ops		PGNSP PGUID 2745  1187 t 1186 ));
@@ -243,6 +245,7 @@ DATA(insert (	3580	bytea_minmax_ops		PGNSP PGUID 4064    17 t 0 ));
 DATA(insert (	3580	char_minmax_ops			PGNSP PGUID 4062    18 t 0 ));
 DATA(insert (	3580	name_minmax_ops			PGNSP PGUID 4065    19 t 0 ));
 DATA(insert (	3580	int8_minmax_ops			PGNSP PGUID 4054    20 t 0 ));
+DATA(insert (	3580	int1_minmax_ops			PGNSP PGUID 4054  6021 t 0 ));
 DATA(insert (	3580	int2_minmax_ops			PGNSP PGUID 4054    21 t 0 ));
 DATA(insert (	3580	int4_minmax_ops			PGNSP PGUID 4054    23 t 0 ));
 DATA(insert (	3580	text_minmax_ops			PGNSP PGUID 4056    25 t 0 ));
